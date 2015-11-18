@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="Wand_Mendel_Fuzzy.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Wand_Mendel_Fuzzy"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <!-- TODO: Delete this line if the key AppName is declared in App.xaml -->
+        <x:String x:Key="AppName">Fuzzy</x:String>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row ="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="openButton" Content="Open" HorizontalAlignment="Center" Height="41" VerticalAlignment="Center" Width="100" Click="openButton_Click" Margin="41.745,53.83,131.255,45.17" RenderTransformOrigin="-1.065,-1.04" Style="{StaticResource NavigationBackButtonNormalStyle}" UseLayoutRounding="False" d:LayoutRounding="Auto">
+                <Button.RenderTransform>
+                    <CompositeTransform Rotation="-90" TranslateX="93.36" TranslateY="219.64"/>
+                </Button.RenderTransform>
+            </Button>
+            <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" 
+            	IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center" Margin="44,51,921,49" HorizontalAlignment="Center" Grid.Column="1" />
+        </Grid>
+    </Grid>
+
+
+</Page>

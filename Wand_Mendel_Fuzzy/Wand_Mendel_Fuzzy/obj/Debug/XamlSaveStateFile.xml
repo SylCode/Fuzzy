@@ -1,0 +1,11 @@
+<XamlCompilerSaveState>
+  <ReferenceAssemblyList>
+    <LocalAssembly PathName="c:\users\никита\documents\visual studio 2015\projects\wand_mendel_fuzzy\wand_mendel_fuzzy\obj\debug\intermediatexaml\wand_mendel_fuzzy.exe" HashGuid="602bb1f5-3166-672b-a11d-71c40c83a5a3" />
+    <ReferenceAssembly PathName="c:\users\никита\documents\visual studio 2015\projects\wand_mendel_fuzzy\packages\portable.aforge.core.2.2.5.50513\lib\netcore451\aforge.dll" HashGuid="613dcab4-bc91-75a5-4746-851cace1a4f7" />
+    <ReferenceAssembly PathName="c:\users\никита\documents\visual studio 2015\projects\wand_mendel_fuzzy\packages\portable.aforge.fuzzy.2.2.5.50513\lib\portable-net45+netcore45+wpa81\aforge.fuzzy.dll" HashGuid="5998f9fb-5fa5-b436-fb42-985c904ed6e7" />
+    <ReferenceAssembly PathName="c:\users\никита\documents\visual studio 2015\projects\wand_mendel_fuzzy\packages\portable.aforge.genetic.2.2.5.50513\lib\portable-net45+netcore45+wpa81\aforge.genetic.dll" HashGuid="d283e40b-faca-80d4-1fc3-c9baca33df9d" />
+    <ReferenceAssembly PathName="c:\users\никита\documents\visual studio 2015\projects\wand_mendel_fuzzy\packages\portable.aforge.math.2.2.5.50513\lib\portable-net45+netcore45+wpa81\aforge.math.dll" HashGuid="dde7ecea-5af2-a7c1-8851-c46d704c9f20" />
+    <ReferenceAssembly PathName="c:\users\никита\documents\visual studio 2015\projects\wand_mendel_fuzzy\packages\portable.aforge.neuro.2.2.5.50513\lib\portable-net45+netcore45+wpa81\aforge.neuro.dll" HashGuid="376b6686-de93-9c45-3774-0e8176f9ee8c" />
+    <ReferenceAssembly PathName="c:\users\никита\documents\visual studio 2015\projects\wand_mendel_fuzzy\packages\shim.1.0.1.50427\lib\netcore451\shim.dll" HashGuid="4425f35b-3b9a-ddf8-6833-da18c81e150a" />
+  </ReferenceAssemblyList>
+</XamlCompilerSaveState>
