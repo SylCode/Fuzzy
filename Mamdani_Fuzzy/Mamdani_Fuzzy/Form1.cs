@@ -15,6 +15,8 @@ namespace Mamdani_Fuzzy
     {
         int size = 300;
         double[] x, y, xL, yL, rL;
+        double[,] membershipX;
+        double[,] membershipY;
         int maxPressure, maxTemp;
         Membership m;
         FuzzySet fuzzy;
@@ -87,8 +89,8 @@ namespace Mamdani_Fuzzy
             list8 = new PointPairList();
             list9 = new PointPairList();
 
-            double[,] membershipX = new double[xL.Length, 3];
-            double[,] membershipY = new double[yL.Length, 3];
+            membershipX = new double[xL.Length, 3];
+            membershipY = new double[yL.Length, 3];
 
             for (int i=0; i<=maxPressure; i++)
             {
@@ -112,16 +114,16 @@ namespace Mamdani_Fuzzy
                 list5.Add(yL[i], membershipY[i, 1]);
                 list6.Add(yL[i], membershipY[i, 2]);
             }
-            membershipY = new double[5,3];
+            double[,] membershipR = new double[5,3];
             for (int i=0; i< 5; i++)
             {
                 rL[i] = i - 1;
-                membershipY[i, 0] = m.trimf(rL[i], fuzzy.Set[keys[6]][0], fuzzy.Set[keys[6]][1], fuzzy.Set[keys[6]][2]);
-                membershipY[i, 1] = m.trimf(rL[i], fuzzy.Set[keys[7]][0], fuzzy.Set[keys[7]][1], fuzzy.Set[keys[7]][2]);
-                membershipY[i, 2] = m.trimf(rL[i], fuzzy.Set[keys[8]][0], fuzzy.Set[keys[8]][1], fuzzy.Set[keys[8]][2]);
-                list7.Add(yL[i], membershipY[i, 0]);
-                list8.Add(yL[i], membershipY[i, 1]);
-                list9.Add(yL[i], membershipY[i, 2]);
+                membershipR[i, 0] = m.trimf(rL[i], fuzzy.Set[keys[6]][0], fuzzy.Set[keys[6]][1], fuzzy.Set[keys[6]][2]);
+                membershipR[i, 1] = m.trimf(rL[i], fuzzy.Set[keys[7]][0], fuzzy.Set[keys[7]][1], fuzzy.Set[keys[7]][2]);
+                membershipR[i, 2] = m.trimf(rL[i], fuzzy.Set[keys[8]][0], fuzzy.Set[keys[8]][1], fuzzy.Set[keys[8]][2]);
+                list7.Add(yL[i], membershipR[i, 0]);
+                list8.Add(yL[i], membershipR[i, 1]);
+                list9.Add(yL[i], membershipR[i, 2]);
             }
 
             //list1.Sort(SortType.XValues);
@@ -191,17 +193,71 @@ namespace Mamdani_Fuzzy
             Random rn = new Random();
             dataGridView1.Columns.Add("X", "Pressure");
             dataGridView1.Columns.Add("Y", "Temperature");
-            double[,] membershipX = new double[x.Length,3];
-            double[,] membershipY = new double[x.Length,3];
+            dataGridView1.Columns.Add("R", "Decision");
+            //double[,] membershipX = new double[x.Length,3];
+            //double[,] membershipY = new double[x.Length,3];
 
             for (int i=0; i<size; i++)
             {
                 x[i] = Math.Round(100 / rn.NextDouble(),0);// % 0.5;
-                y[i] = rn.Next(-100, 100);
+                y[i] = rn.Next(-100, 60);
                 if (y[i] < -273)
                     y[i] = -273;
                 if (x[i] > 6000)
-                    x[i] = 6000;// % 0.5;
+                    x[i] = 6000;
+
+                double totalM, m1=0,m2=0;
+                string decision1, decision2, decision;
+                decision = decision1 = decision2 = "";
+                for (int j=0; j< xL.Length-1; j++)
+                {
+                    if (x[i]>=xL[j]&&x[i]<= xL[j+1])
+                    {
+                        if (membershipX[j, 0] <= membershipX[j, 1])
+                        {
+                            m1 = membershipX[j, 1];
+                            decision1 = keys[1];
+                        }
+                        else
+                        {
+                            m1 = membershipX[j, 0];
+                            decision1 = keys[0];
+                        }
+                        if (m1 <= membershipX[j, 2])
+                        {
+                            m1 = membershipX[j, 2];
+                            decision1 = keys[2];
+                        }
+                        break;
+                    }
+                }
+                for (int j = 0; j < yL.Length - 1; j++)
+                {
+                    if (y[i] >= yL[j] && y[i] <= yL[j + 1])
+                    {
+                        if (membershipY[j, 0] <= membershipY[j, 1])
+                        {
+                            m2 = membershipY[j, 1];
+                            decision2 = keys[4];
+                        }
+                        else
+                        {
+                            m2 = membershipY[j, 0];
+                            decision2 = keys[3];
+                        }
+                        if (m2 <= membershipX[j, 2])
+                        {
+                            m2 = membershipY[j, 2];
+                            decision2 = keys[5];
+                        }
+                        break;
+                    }
+                }
+                totalM = Math.Min(m1,m2);
+                if (decision1 == "Medium" && decision2 == "Warm" || decision1 == "Medium" && decision2 == "Warm")
+                    decision = "Norm";
+                else decision = "Dead";
+                // % 0.5;
                 //membershipX[i, 0] = m.trimf(x[i], fuzzy.Set[keys[0]][0], fuzzy.Set[keys[0]][1], fuzzy.Set[keys[0]][2]);
                 //membershipX[i, 1] = m.trimf(x[i], fuzzy.Set[keys[1]][0], fuzzy.Set[keys[1]][1], fuzzy.Set[keys[1]][2]);
                 //membershipX[i, 2] = m.trimf(x[i], fuzzy.Set[keys[2]][0], fuzzy.Set[keys[2]][1], fuzzy.Set[keys[2]][2]);
@@ -215,8 +271,8 @@ namespace Mamdani_Fuzzy
                 //list4.Add(y[i], membershipY[i, 0]);
                 //list5.Add(y[i], membershipY[i, 1]);
                 //list6.Add(y[i], membershipY[i, 2]);
-                
-                dataGridView1.Rows.Add(new string[] { x[i].ToString(), y[i].ToString() });
+
+                dataGridView1.Rows.Add(new string[] { x[i].ToString(), y[i].ToString(), decision });
             }
 
             //list1.Sort(SortType.XValues);
