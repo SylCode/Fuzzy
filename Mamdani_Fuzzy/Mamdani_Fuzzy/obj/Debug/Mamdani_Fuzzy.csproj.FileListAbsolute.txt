@@ -22,3 +22,27 @@ c:\users\никита\documents\visual studio 2015\Projects\Mamdani_Fuzzy\Mamdan
 c:\users\никита\documents\visual studio 2015\Projects\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\tr\ZedGraph.resources.dll
 c:\users\никита\documents\visual studio 2015\Projects\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\zh-cn\ZedGraph.resources.dll
 c:\users\никита\documents\visual studio 2015\Projects\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\zh-tw\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\Mamdani_Fuzzy.exe.config
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\obj\Debug\Mamdani_Fuzzy.exe
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\obj\Debug\Mamdani_Fuzzy.pdb
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\Mamdani_Fuzzy.exe
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\Mamdani_Fuzzy.pdb
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\ZedGraph.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\ZedGraph.xml
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\de\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\es\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\fr\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\hu\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\it\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\ja\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\pt\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\ru\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\sk\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\sv\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\tr\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\zh-cn\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\zh-tw\ZedGraph.resources.dll
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\obj\Debug\Mamdani_Fuzzy.csprojResolveAssemblyReference.cache
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\obj\Debug\Mamdani_Fuzzy.Form1.resources
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\obj\Debug\Mamdani_Fuzzy.Properties.Resources.resources
+D:\Users\Никита\Documents\GitHub\Fuzzy\Mamdani_Fuzzy\Mamdani_Fuzzy\obj\Debug\Mamdani_Fuzzy.csproj.GenerateResource.Cache

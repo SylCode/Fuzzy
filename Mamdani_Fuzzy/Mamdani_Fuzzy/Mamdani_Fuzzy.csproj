@@ -51,12 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeFuzzySet.cs" />
+    <Compile Include="EqualityComparer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FuzzyRule.cs" />
     <Compile Include="FuzzySet.cs" />
     <Compile Include="Membership.cs" />
     <Compile Include="Program.cs" />
