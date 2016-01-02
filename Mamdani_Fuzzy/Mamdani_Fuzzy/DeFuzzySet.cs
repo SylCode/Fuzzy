@@ -11,10 +11,10 @@ namespace Mamdani_Fuzzy
         double[] data;
         double[,] membership;
 
-        public DeFuzzySet(double[] dat)
+        public DeFuzzySet(double[] dat, int n)
         {
             data = dat;
-            membership = new double[data.Length,3];
+            membership = new double[data.Length,n];
         }
 
         public DeFuzzySet(double[] dat, double[,] member)

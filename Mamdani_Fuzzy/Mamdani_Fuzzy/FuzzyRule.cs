@@ -24,5 +24,11 @@ namespace Mamdani_Fuzzy
         {
             return rules[conditions];
         }
+
+        public string[] getValues()
+        {
+            return rules.Values.ToArray();
+        }
+
     }
 }
