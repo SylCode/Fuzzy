@@ -8,8 +8,8 @@ namespace Mamdani_Fuzzy
 {
     class DeFuzzySet
     {
-        double[] data;
-        double[,] membership;
+        public double[] data;
+        public double[,] membership;
 
         public DeFuzzySet(double[] dat, int n)
         {

@@ -16,20 +16,16 @@ namespace Mamdani_Fuzzy
         int size = 300, nIn=2, nDiv=3;
         double[] x, y, xL, yL, rL;
         List<double[,]> membershipIn, membershipOut;
-        List<double[]> inputData;
-        //double[,] membershipX;
-        //double[,] membershipY;
+        List<double[]> inputData, genData;
+        List<string[]> decisions;
         int maxPressure, maxTemp;
         Membership m;
         FuzzySet fuzzy, rFuzzy;
-        DeFuzzySet deFuzzy;
+        List<DeFuzzySet> inputDef;
         FuzzyRules rules;
         List<PointPairList> list, rList;
-        //string[] pressure = new string[] { "Low", "Medium", "High" };
-        //int[] low, med, hi, hot, warm, cold;
         List<int[]> data;
         string[] keys, classes;
-        //string[] temperature = new string[] { "Hot", "Warm", "Cold" };
         string[] output = new string[] { "Very deep", "Deep", "Norm", "High" };
 
 
@@ -39,6 +35,10 @@ namespace Mamdani_Fuzzy
             membershipIn = new List<double[,]>();
             membershipOut = new List<double[,]>();
             inputData = new List<double[]>();
+            genData = new List<double[]>();
+            decisions = new List<string[]>();
+            inputDef = new List<DeFuzzySet>();
+
 
             data = new List<int[]>();
             rules = new FuzzyRules();
@@ -87,8 +87,9 @@ namespace Mamdani_Fuzzy
             inputData.Add(new double[maxPressure+1]);
             inputData.Add(new double[100+maxTemp+1]);
 
-            x = new double[size];
-            y = new double[size];
+            genData.Add(new double[size]);
+            genData.Add(new double[size]);
+            
 
             rL = new double[maxTemp+1];
             
@@ -128,7 +129,6 @@ namespace Mamdani_Fuzzy
                 inputData[k][0] = fuzzy.Set[keys[n]][0];
                 for (int i = 0; i < membershipIn[k].Length / 3; i++)
                 {
-                    //inputData[k][i] = fuzzy.Set[keys[n]][0];
                     for (int j = n; j < n + nDiv; j++)
                     {
                         membershipIn[k][i, ct] = m.trimf(inputData[k][i], fuzzy.Set[keys[j]][0], fuzzy.Set[keys[j]][1], fuzzy.Set[keys[j]][2]);
@@ -142,35 +142,15 @@ namespace Mamdani_Fuzzy
                 }
                 n += nDiv;
             }
-
-            //for (int i=0; i<=maxPressure; i++)
-            //{
-            //    xL[i] = i;
-            //    membershipX[i, 0] = m.trimf(xL[i], fuzzy.Set[keys[0]][0], fuzzy.Set[keys[0]][1], fuzzy.Set[keys[0]][2]);
-            //    membershipX[i, 1] = m.trimf(xL[i], fuzzy.Set[keys[1]][0], fuzzy.Set[keys[1]][1], fuzzy.Set[keys[1]][2]);
-            //    membershipX[i, 2] = m.trimf(xL[i], fuzzy.Set[keys[2]][0], fuzzy.Set[keys[2]][1], fuzzy.Set[keys[2]][2]);
-            //    list[0].Add(xL[i], membershipX[i, 0]);
-            //    list[1].Add(xL[i], membershipX[i, 1]);
-            //    list[2].Add(xL[i], membershipX[i, 2]);
-            //}
-
-            //int t = -101;
-            //for (int i=0; i<=100+maxTemp; i++)
-            //{
-            //    yL[i] = t + i;
-            //    membershipY[i, 0] = m.trimf(yL[i], fuzzy.Set[keys[3]][0], fuzzy.Set[keys[3]][1], fuzzy.Set[keys[3]][2]);
-            //    membershipY[i, 1] = m.trimf(yL[i], fuzzy.Set[keys[4]][0], fuzzy.Set[keys[4]][1], fuzzy.Set[keys[4]][2]);
-            //    membershipY[i, 2] = m.trimf(yL[i], fuzzy.Set[keys[5]][0], fuzzy.Set[keys[5]][1], fuzzy.Set[keys[5]][2]);
-            //    list[3].Add(yL[i], membershipY[i, 0]);
-            //    list[4].Add(yL[i], membershipY[i, 1]);
-            //    list[5].Add(yL[i], membershipY[i, 2]);
-            //}
+            for (int i=0; i<inputData.Count; i++)
+            {
+                inputDef.Add(new DeFuzzySet(inputData[i], membershipIn[i]));
+            }
+            
             int nR, nD;
             nR = rFuzzy.Set.Count;
             double[,] membershipR = new double[maxTemp+1,nR];
-
-            //rL[0] = rFuzzy.Set[classes[0]][0];
-
+            
             ct = 0;
             for (int i=rFuzzy.Set[classes[0]][0]; i<= rFuzzy.Set[classes[nR-1]][2]; i++)
             {
@@ -181,17 +161,11 @@ namespace Mamdani_Fuzzy
                     rList[j].Add(rL[ct], membershipR[ct, j]);
                 }
                
-                //membershipR[ct, 1] = m.trimf(rL[ct], fuzzy.Set[keys[7]][0], fuzzy.Set[keys[7]][1], fuzzy.Set[keys[7]][2]);
-                //membershipR[ct, 2] = m.trimf(rL[ct], fuzzy.Set[keys[8]][0], fuzzy.Set[keys[8]][1], fuzzy.Set[keys[8]][2]);
-                //membershipR[ct, 3] = m.trimf(rL[ct], fuzzy.Set[keys[9]][0], fuzzy.Set[keys[9]][1], fuzzy.Set[keys[9]][2]);
-                //list[6].Add(rL[ct], membershipR[ct, 0]);
-                //list[7].Add(rL[ct], membershipR[ct, 1]);
-                //list[8].Add(rL[ct], membershipR[ct, 2]);
-                //list[9].Add(rL[ct], membershipR[ct, 3]);
                 ct++;
             }
             membershipOut.Add(membershipR);
 
+            #region output
             pane2.XAxis.Scale.Min = -100;
             pane2.XAxis.Scale.Max = maxTemp;
             pane1.XAxis.Scale.Max = maxPressure;
@@ -227,6 +201,7 @@ namespace Mamdani_Fuzzy
             zedGraphControl2.Invalidate();
             zedGraphControl3.AxisChange();
             zedGraphControl3.Invalidate();
+            #endregion
 
         }
 
@@ -235,80 +210,60 @@ namespace Mamdani_Fuzzy
 
         }
 
-        
-        private void button1_Click(object sender, EventArgs e)
+
+        private void generateButton_Click(object sender, EventArgs e)
         {
-            //Random rn = new Random();
-            //GraphPane paneA = zedGraphControl4.GraphPane;
-            //dataGridView1.Columns.Add("X", "Pressure");
-            //dataGridView1.Columns.Add("Y", "Temperature");
-            //dataGridView1.Columns.Add("R", "Decision");
+            Random rn = new Random();
+            GraphPane paneA = zedGraphControl4.GraphPane;
+            dataGridView1.Columns.Add("X", "Pressure");
+            dataGridView1.Columns.Add("Y", "Temperature");
+            dataGridView1.Columns.Add("R", "Decision");
+            string[] decisions = new string[inputData.Count];
+            double[,] m = new double[size, rFuzzy.Set.Count];  //wartosci regul dla agregacji
+            double[] totalM = new double[size];
+            string[] decision= new string[size];
 
-            //for (int i=0; i<size; i++)
-            //{
-            //    x[i] = Math.Round(100 / rn.NextDouble(),0);// % 0.5;
-            //    y[i] = rn.Next(-100, 60);
-            //    if (x[i] > 3699)
-            //        x[i] = 3699;
+            List<double[,]> ms = new List<double[,]>();
+            for (int i = 0; i < inputData.Count; i++)
+                ms.Add(new double[rFuzzy.Set.Count, inputData.Count]);
 
-            //    double totalM, m1=0,m2=0;
-            //    string decision1, decision2, decision;
-            //    decision = decision1 = decision2 = "";
-            //    for (int j=0; j< xL.Length-1; j++)
-            //    {
-            //        if (x[i]==xL[j])
-            //        {
-            //            if (membershipX[j, 0] <= membershipX[j, 1])
-            //            {
-            //                m1 = membershipX[j, 1];
-            //                decision1 = keys[1];
-            //            }
-            //            else
-            //            {
-            //                m1 = membershipX[j, 0];
-            //                decision1 = keys[0];
-            //            }
-            //            if (m1 <= membershipX[j, 2])
-            //            {
-            //                m1 = membershipX[j, 2];
-            //                decision1 = keys[2];
-            //            }
-            //            break;
-            //        }
-            //    }
-            //    if (decision1 == "")
-            //    {
-            //        int a = 0;
-            //    }
-            //    for (int j = 0; j < yL.Length - 1; j++)
-            //    {
-            //        if (y[i] >= yL[j] && y[i] <= yL[j + 1])
-            //        {
-            //            if (membershipY[j, 0] <= membershipY[j, 1])
-            //            {
-            //                m2 = membershipY[j, 1];
-            //                decision2 = keys[4];
-            //            }
-            //            else
-            //            {
-            //                m2 = membershipY[j, 0];
-            //                decision2 = keys[3];
-            //            }
-            //            if (m2 <= membershipX[j, 2])
-            //            {
-            //                m2 = membershipY[j, 2];
-            //                decision2 = keys[5];
-            //            }
-            //            break;
-            //        }
-            //    }
-            //    totalM = Math.Min(m1,m2);
-            //    m1 = 0; m2 = 0;
-            //    decision = rules.checkRule(new string[] {decision1, decision2 });
-            //    decision1 = ""; decision2 = "";
-            //    dataGridView1.Rows.Add(new string[] { x[i].ToString(), y[i].ToString(), decision });
+            for (int i = 0; i < size; i++)
+            {
+                genData[0][i] = Math.Round(100 / rn.NextDouble(), 0);// % 0.5;
+                genData[1][i] = rn.Next(-100, 60);
+                if (genData[0][i] > 3699)
+                    genData[0][i] = 3699;
+                
+                for (int j = 0; j < genData.Count; j++)
+                {
+                    for (int k = 0; k < inputData[j].Length; k++)
+                    {
+                        if (genData[j][i] == inputData[j][k])
+                        {
+                            ms[j][0, j] = membershipIn[j][k, 2];
+                            ms[j][1, j] = membershipIn[j][k, 2];
+                            ms[j][2, j] = membershipIn[j][k, 1];
+                            ms[j][3, j] = membershipIn[j][k, 0];
+                            break;
+                        }
+                    }
+                }
+                double[] max = new double[rFuzzy.Set.Count];
+                for (int j=0; j<max.Length; j++)
+                {
+                    max[j] = double.MinValue;
+                }
+                for (int j=0; j<rFuzzy.Set.Count; j++)
+                {
+                    for (int k=0; k<genData.Count; k++)
+                    {
+                        if (max[j] < ms[k][j, k])
+                            max[j] = ms[k][j, k];
+                    }
+                    m[i, j] = max[j];
+                }
+
             }
-            
-        
+        }
     }
 }

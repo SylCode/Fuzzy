@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
+            this.generateButton = new System.Windows.Forms.Button();
             this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.zedGraphControl2 = new ZedGraph.ZedGraphControl();
             this.zedGraphControl3 = new ZedGraph.ZedGraphControl();
@@ -48,15 +48,15 @@
             this.dataGridView1.Size = new System.Drawing.Size(344, 799);
             this.dataGridView1.TabIndex = 0;
             // 
-            // button1
+            // generateButton
             // 
-            this.button1.Location = new System.Drawing.Point(136, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Generate";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.generateButton.Location = new System.Drawing.Point(136, 2);
+            this.generateButton.Name = "generateButton";
+            this.generateButton.Size = new System.Drawing.Size(75, 23);
+            this.generateButton.TabIndex = 1;
+            this.generateButton.Text = "Generate";
+            this.generateButton.UseVisualStyleBackColor = true;
+            this.generateButton.Click += new System.EventHandler(this.generateButton_Click);
             // 
             // zedGraphControl1
             // 
@@ -127,7 +127,7 @@
             this.Controls.Add(this.zedGraphControl3);
             this.Controls.Add(this.zedGraphControl2);
             this.Controls.Add(this.zedGraphControl1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.generateButton);
             this.Controls.Add(this.dataGridView1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
@@ -140,7 +140,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button generateButton;
         private ZedGraph.ZedGraphControl zedGraphControl1;
         private ZedGraph.ZedGraphControl zedGraphControl2;
         private ZedGraph.ZedGraphControl zedGraphControl3;
