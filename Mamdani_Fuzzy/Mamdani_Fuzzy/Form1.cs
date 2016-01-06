@@ -16,6 +16,7 @@ namespace Mamdani_Fuzzy
         int size = 300, nIn=2, nDiv=3;
         double[] x, y, xL, yL, rL;
         List<double[,]> membershipIn, membershipOut;
+        double[,] mm;
         List<double[]> inputData, genData;
         List<string[]> decisions;
         int maxPressure, maxTemp;
@@ -24,10 +25,87 @@ namespace Mamdani_Fuzzy
         List<DeFuzzySet> inputDef;
         FuzzyRules rules;
         List<PointPairList> list, rList;
+        Predicate<PointPair> pred;
         List<int[]> data;
         string[] keys, classes;
         string[] output = new string[] { "Very deep", "Deep", "Norm", "High" };
 
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            zedGraphControl4.GraphPane.CurveList.Clear();
+            zedGraphControl4.Invalidate();
+            GraphPane pane4 = zedGraphControl4.GraphPane;
+            int index = e.RowIndex;
+            List<PointPairList> rCopy = new List<PointPairList>();
+            PointPairList aggrList = new PointPairList();
+            for (int i=0; i<rList.Count; i++)
+            {
+                rCopy.Add(new PointPairList());
+                foreach(PointPair pp in rList[i])
+                {
+                    rCopy[i].Add(new PointPair(pp.X, pp.Y));
+                }
+            }
+            pred = new Predicate<PointPair>(check);
+
+            
+            for(int i=0; i< rCopy.Count; i++)
+            {
+                //rCopy[i].RemoveAll(pred(removePoint));
+                bool flag = true;
+                while (flag)
+                {
+                    flag = false;
+                    for (int j = 0; j < rCopy[i].Count; j++)
+                    {
+                        if (rCopy[i][j].Y > mm[index,i])
+                        {
+                            rCopy[i].RemoveAt(j);
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < rList.Count; i++)
+            {
+                for (int j=0; j<rCopy[i].Count;j++)
+                {
+                    if (i != rList.Count - 1)
+                    {
+                        if (rCopy[i][j].Y >= rCopy[i+1][j].Y)
+                        {
+                            aggrList.Add(rCopy[i][j]);
+                        }
+                        else i++;
+                    }
+                    else aggrList.Add(rCopy[i][j]);
+                }
+            }
+
+            rCopy[0].Intersect<PointPairList>(rCopy[1]);
+
+            //LineItem curve7 = pane4.AddCurve("Very deep", rCopy[0], Color.Blue, SymbolType.None);
+            //curve7.Line.Width = 1;
+            //LineItem curve8 = pane4.AddCurve("Deep", rCopy[1], Color.Green, SymbolType.None);
+            //curve8.Line.Width = 1;
+            //LineItem curve9 = pane4.AddCurve("Surphace", rCopy[2], Color.Red, SymbolType.None);
+            //curve9.Line.Width = 1;
+            //LineItem curve10 = pane4.AddCurve("Space", rCopy[3], Color.Black, SymbolType.None);
+            //curve10.Line.Width = 1;
+            LineItem curve11 = pane4.AddCurve("Aggregate", aggrList, Color.Purple, SymbolType.None);
+            curve11.Line.Width = 2;
+
+            zedGraphControl4.AxisChange();
+            zedGraphControl4.Invalidate();
+
+
+        }
+
+        bool check (PointPair pp)
+        {
+            return true;
+        }
 
         public Form1()
         {
@@ -219,9 +297,10 @@ namespace Mamdani_Fuzzy
             dataGridView1.Columns.Add("Y", "Temperature");
             dataGridView1.Columns.Add("R", "Decision");
             string[] decisions = new string[inputData.Count];
-            double[,] m = new double[size, rFuzzy.Set.Count];  //wartosci regul dla agregacji
+            mm = new double[size, rFuzzy.Set.Count];  //wartosci regul dla agregacji
             double[] totalM = new double[size];
             string[] decision= new string[size];
+
 
             List<double[,]> ms = new List<double[,]>();
             for (int i = 0; i < inputData.Count; i++)
@@ -233,7 +312,8 @@ namespace Mamdani_Fuzzy
                 genData[1][i] = rn.Next(-100, 60);
                 if (genData[0][i] > 3699)
                     genData[0][i] = 3699;
-                
+
+                dataGridView1.Rows.Add(new string[]{ genData[0][i].ToString(), genData[1][i].ToString() });
                 for (int j = 0; j < genData.Count; j++)
                 {
                     for (int k = 0; k < inputData[j].Length; k++)
@@ -260,7 +340,7 @@ namespace Mamdani_Fuzzy
                         if (max[j] < ms[k][j, k])
                             max[j] = ms[k][j, k];
                     }
-                    m[i, j] = max[j];
+                    mm[i, j] = max[j];
                 }
 
             }
