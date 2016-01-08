@@ -60,7 +60,8 @@ namespace Mamdani_Fuzzy
                     {
                         if (rCopy[i][j].Y > mm[index,i])
                         {
-                            rCopy[i].RemoveAt(j);
+                            //rCopy[i].RemoveAt(j);
+                            rCopy[i][j].Y = mm[index, i];
                             flag = true;
                             break;
                         }
@@ -69,11 +70,11 @@ namespace Mamdani_Fuzzy
             }
             for (int i = 0; i < rList.Count; i++)
             {
-                for (int j=0; j<rCopy[i].Count;j++)
+                for (int j = 0; j < rCopy[i].Count; j++)
                 {
                     if (i != rList.Count - 1)
                     {
-                        if (rCopy[i][j].Y >= rCopy[i+1][j].Y)
+                        if (rCopy[i][j].Y >= rCopy[i + 1][j].Y)
                         {
                             aggrList.Add(rCopy[i][j]);
                         }
@@ -83,18 +84,18 @@ namespace Mamdani_Fuzzy
                 }
             }
 
-            rCopy[0].Intersect<PointPairList>(rCopy[1]);
-
-            //LineItem curve7 = pane4.AddCurve("Very deep", rCopy[0], Color.Blue, SymbolType.None);
-            //curve7.Line.Width = 1;
-            //LineItem curve8 = pane4.AddCurve("Deep", rCopy[1], Color.Green, SymbolType.None);
-            //curve8.Line.Width = 1;
-            //LineItem curve9 = pane4.AddCurve("Surphace", rCopy[2], Color.Red, SymbolType.None);
-            //curve9.Line.Width = 1;
-            //LineItem curve10 = pane4.AddCurve("Space", rCopy[3], Color.Black, SymbolType.None);
-            //curve10.Line.Width = 1;
+            //rCopy[0].Intersect<PointPairList>(rCopy[1]);
             LineItem curve11 = pane4.AddCurve("Aggregate", aggrList, Color.Purple, SymbolType.None);
             curve11.Line.Width = 2;
+
+            LineItem curve7 = pane4.AddCurve("Very deep", rCopy[0], Color.Blue, SymbolType.Circle);
+            curve7.Line.Width = 1;
+            LineItem curve8 = pane4.AddCurve("Deep", rCopy[1], Color.Green, SymbolType.Diamond);
+            curve8.Line.Width = 1;
+            LineItem curve9 = pane4.AddCurve("Surphace", rCopy[2], Color.Red, SymbolType.Plus);
+            curve9.Line.Width = 1;
+            LineItem curve10 = pane4.AddCurve("Space", rCopy[3], Color.Black, SymbolType.Star);
+            curve10.Line.Width = 1;
 
             zedGraphControl4.AxisChange();
             zedGraphControl4.Invalidate();
@@ -308,7 +309,7 @@ namespace Mamdani_Fuzzy
 
             for (int i = 0; i < size; i++)
             {
-                genData[0][i] = Math.Round(100 / rn.NextDouble(), 0);// % 0.5;
+                genData[0][i] = Math.Round(100 / rn.NextDouble(), 0) + 200;// % 0.5;
                 genData[1][i] = rn.Next(-100, 60);
                 if (genData[0][i] > 3699)
                     genData[0][i] = 3699;
