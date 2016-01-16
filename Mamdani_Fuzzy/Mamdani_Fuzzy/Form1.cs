@@ -13,11 +13,10 @@ namespace Mamdani_Fuzzy
 {
     public partial class Form1 : Form
     {
-
         GraphPane pane1, pane2, pane3, pane4;
         int size = 300, nIn=2, nDiv=3, minGen=-100,maxGen=100;
-        double[] rL,mY;
-        string[] categoryYL, categoryYT;
+        double[] rL,mY,rT;
+        string[] categoryYL, categoryYT1, categoryYT2;
         List<double[,]> membershipIn, membershipOut,mm;
         double[,] mmY,m;
         string[,] categoryXL;
@@ -26,201 +25,10 @@ namespace Mamdani_Fuzzy
         Membership func;
         FuzzySet fuzzy, rFuzzy;
         List<DeFuzzySet> inputDef;
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            for (int i=0; i< size; i++)
-            {
-                string[] args = new string[nIn];
-                double weight = 1;
-
-                for (int j = 0; j < nIn; j++)
-                {
-                    args[j] = categoryXL[i, j];
-                    weight *= m[i, j];
-                }
-                weight *= mY[i];
-
-                if (!rules.Contains(args))
-                    rules.addRule(args, categoryYL[i],weight);
-                else
-                {
-                    if (weight > rules.getWeight(args))
-                        rules.Replace(args, categoryYL[i], weight);
-                }
-            }
-            string[] values = rules.getValues();
-            string[][] keys = rules.getKeys();
-            for (int i=0; i<size; i++)
-            {
-                double y = 0;
-                double m1 = 0, m2 = 0;
-                for (int j=0; j<values.Length; j++)
-                {
-                    //m2+=              //by keys we get the intervals from fuzzyset.Set and calculate trimf. Trimf for x1,x2, y For EACH rule in rule set
-                }
-                //dataGridView1.Rows[i].Cells[2].Value=rules.checkRule()
-            }
-        }
-
         FuzzyRules rules;
         List<PointPairList> list, rList;
-
-
         List<int[]> data;
         string[] keys, classes;
-        string[] output = new string[] { "Very deep", "Deep", "Norm", "High" };
-
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            My_wang_Mendel(e);
-        }
-
-        public void wang_Mendel(DataGridViewCellEventArgs e)
-        {
-            //zedGraphControl4.GraphPane.CurveList.Clear();
-            //zedGraphControl4.Invalidate();
-            //pane4 = zedGraphControl4.GraphPane;
-            //pane4.XAxis.Scale.Min = minGen;
-            //pane4.XAxis.Scale.Max = maxGen;
-            //int index = e.RowIndex;
-            //List<PointPairList> rCopy = new List<PointPairList>();
-            //PointPairList aggrList = new PointPairList();
-            //for (int i = 0; i < rList.Count; i++)
-            //{
-            //    rCopy.Add(new PointPairList());
-            //    foreach (PointPair pp in rList[i])
-            //    {
-            //        rCopy[i].Add(new PointPair(pp.X, pp.Y));
-            //    }
-            //}
-            //pred = new Predicate<PointPair>(check);
-
-
-            //for (int i = 0; i < rCopy.Count; i++)
-            //{
-            //    //rCopy[i].RemoveAll(pred(removePoint));
-            //    bool flag = true;
-            //    while (flag)
-            //    {
-            //        flag = false;
-            //        for (int j = 0; j < rCopy[i].Count; j++)
-            //        {
-            //            if (rCopy[i][j].Y > mm[index, i])
-            //            {
-            //                //rCopy[i].RemoveAt(j);
-            //                rCopy[i][j].Y = mm[index, i];
-            //                flag = true;
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
-            //for (int i = 0; i < rList.Count; i++)
-            //{
-            //    for (int j = 0; j < rCopy[i].Count; j++)
-            //    {
-            //        if (i != rList.Count - 1)
-            //        {
-            //            if (rCopy[i][j].Y >= rCopy[i + 1][j].Y)
-            //            {
-            //                aggrList.Add(rCopy[i][j]);
-            //            }
-            //            else i++;
-            //        }
-            //        else aggrList.Add(rCopy[i][j]);
-            //    }
-            //}
-
-            ////rCopy[0].Intersect<PointPairList>(rCopy[1]);
-            //LineItem curve11 = pane4.AddCurve("Aggregate", aggrList, Color.Purple, SymbolType.None);
-            //curve11.Line.Width = 2;
-
-            //LineItem curve7 = pane4.AddCurve("Very deep", rCopy[0], Color.Blue, SymbolType.None);
-            //curve7.Line.Width = 1;
-            //LineItem curve8 = pane4.AddCurve("Deep", rCopy[1], Color.Green, SymbolType.None);
-            //curve8.Line.Width = 1;
-            //LineItem curve9 = pane4.AddCurve("Surphace", rCopy[2], Color.Red, SymbolType.None);
-            //curve9.Line.Width = 1;
-            ////LineItem curve10 = pane4.AddCurve("Space", rCopy[3], Color.Black, SymbolType.Star);
-            ////curve10.Line.Width = 1;
-
-            //zedGraphControl4.AxisChange();
-            //zedGraphControl4.Invalidate();
-        }
-
-        public void My_wang_Mendel(DataGridViewCellEventArgs e)
-        {
-            //zedGraphControl4.GraphPane.CurveList.Clear();
-            //zedGraphControl4.Invalidate();
-            //pane4 = zedGraphControl4.GraphPane;
-            //pane4.XAxis.Scale.Min = minGen;
-            //pane4.XAxis.Scale.Max = maxGen;
-            //int index = e.RowIndex;
-            //List<PointPairList> rCopy = new List<PointPairList>();
-            //PointPairList aggrList = new PointPairList();
-            //for (int i = 0; i < rList.Count; i++)
-            //{
-            //    rCopy.Add(new PointPairList());
-            //    foreach (PointPair pp in rList[i])
-            //    {
-            //        rCopy[i].Add(new PointPair(pp.X, pp.Y));
-            //    }
-            //}
-            //pred = new Predicate<PointPair>(check);
-
-
-            //for (int i = 0; i < rCopy.Count; i++)
-            //{
-            //    //rCopy[i].RemoveAll(pred(removePoint));
-            //    bool flag = true;
-            //    while (flag)
-            //    {
-            //        flag = false;
-            //        for (int j = 0; j < rCopy[i].Count; j++)
-            //        {
-            //            if (rCopy[i][j].Y > mm[index, i])
-            //            {
-            //                //rCopy[i].RemoveAt(j);
-            //                rCopy[i][j].Y = mm[index, i];
-            //                flag = true;
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
-            //for (int i = 0; i < rList.Count; i++)
-            //{
-            //    for (int j = 0; j < rCopy[i].Count; j++)
-            //    {
-            //        if (i != rList.Count - 1)
-            //        {
-            //            if (rCopy[i][j].Y >= rCopy[i + 1][j].Y)
-            //            {
-            //                aggrList.Add(rCopy[i][j]);
-            //            }
-            //            else i++;
-            //        }
-            //        else aggrList.Add(rCopy[i][j]);
-            //    }
-            //}
-
-            ////rCopy[0].Intersect<PointPairList>(rCopy[1]);
-            //LineItem curve11 = pane4.AddCurve("Aggregate", aggrList, Color.Purple, SymbolType.None);
-            //curve11.Line.Width = 2;
-
-            //LineItem curve7 = pane4.AddCurve("Very deep", rCopy[0], Color.Blue, SymbolType.None);
-            //curve7.Line.Width = 1;
-            //LineItem curve8 = pane4.AddCurve("Deep", rCopy[1], Color.Green, SymbolType.None);
-            //curve8.Line.Width = 1;
-            //LineItem curve9 = pane4.AddCurve("Surphace", rCopy[2], Color.Red, SymbolType.None);
-            //curve9.Line.Width = 1;
-            ////LineItem curve10 = pane4.AddCurve("Space", rCopy[3], Color.Black, SymbolType.Star);
-            ////curve10.Line.Width = 1;
-
-            //zedGraphControl4.AxisChange();
-            //zedGraphControl4.Invalidate();
-        }
 
         bool check (PointPair pp)
         {
@@ -235,10 +43,12 @@ namespace Mamdani_Fuzzy
 
             m = new double[size, nIn];
             mY = new double[size];
+            rT = new double[size];
 
             categoryXL = new string[size, nIn];
             categoryYL = new string[size];
-            categoryYT = new string[size];
+            categoryYT1 = new string[size];
+            categoryYT2 = new string[size];
 
             LearningX = new List<double[]>();
             LearningY = new List<double[]>();
@@ -256,20 +66,34 @@ namespace Mamdani_Fuzzy
             rFuzzy = new FuzzySet();
             func = new Membership();
 
+            keys = new string[nDiv * nIn];
+            classes = new string[nDiv];
 
-            keys = new string[] { "Low", "Medium", "High Pressure", "Cold","Warm", "Hot"};
-            classes = new string[] { "Space", "Norm", "Deep" };
+            for (int i=0; i<nDiv*nIn; i++)
+            {
+                if (i<nDiv)
+                {
+                    keys[i] = i + "A" + i;
+                    classes[i] = i + "B" + i;
+                }
+                else
+                {
+                    keys[i] = (i-nDiv) + "A." + (i-nDiv);
+                }
+            }
+            //keys = new string[] { "Low", "Medium", "High Pressure", "Cold","Warm", "Hot"};
+            //classes = new string[] { "Space", "Norm", "Deep" };
 
 
             int d = (Math.Abs(minGen) + Math.Abs(maxGen))/4;
 
-            data.Add(new int[] { minGen, minGen, minGen + 2 * d });
+            data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
             data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
-            data.Add(new int[] { minGen + 2 * d, maxGen, maxGen });
+            data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, maxGen });
 
-            data.Add(new int[] { minGen, minGen, minGen + 2 * d });
+            data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
             data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
-            data.Add(new int[] { minGen + 2 * d, maxGen, maxGen });
+            data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, maxGen });
 
             data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
             data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
@@ -390,25 +214,25 @@ namespace Mamdani_Fuzzy
             pane3.XAxis.Scale.Max = maxGen;
 
 
-            LineItem curve1 = pane1.AddCurve("Low", list[0], Color.Blue, SymbolType.None);
+            LineItem curve1 = pane1.AddCurve(keys[0], list[0], Color.Blue, SymbolType.None);
             curve1.Line.Width = 1;
-            LineItem curve2 = pane1.AddCurve("Medium", list[1],Color.Green, SymbolType.None);
+            LineItem curve2 = pane1.AddCurve(keys[1], list[1],Color.Green, SymbolType.None);
             curve2.Line.Width = 1;
-            LineItem curve3 = pane1.AddCurve("High", list[2], Color.Red, SymbolType.None);
+            LineItem curve3 = pane1.AddCurve(keys[2], list[2], Color.Red, SymbolType.None);
             curve3.Line.Width = 1;
 
-            LineItem curve4 = pane2.AddCurve("Cold", list[3], Color.Blue, SymbolType.None);
+            LineItem curve4 = pane2.AddCurve(keys[3], list[3], Color.Blue, SymbolType.None);
             curve4.Line.Width = 1;
-            LineItem curve5 = pane2.AddCurve("Warm", list[4], Color.Green, SymbolType.None);
+            LineItem curve5 = pane2.AddCurve(keys[4], list[4], Color.Green, SymbolType.None);
             curve5.Line.Width = 1;
-            LineItem curve6 = pane2.AddCurve("Hot", list[5], Color.Red, SymbolType.None);
+            LineItem curve6 = pane2.AddCurve(keys[5], list[5], Color.Red, SymbolType.None);
             curve6.Line.Width = 1;
 
-            LineItem curve7 = pane3.AddCurve("Deep", rList[0], Color.Blue, SymbolType.None);
+            LineItem curve7 = pane3.AddCurve(classes[0], rList[0], Color.Blue, SymbolType.None);
             curve7.Line.Width = 1;
-            LineItem curve8 = pane3.AddCurve("Surphace", rList[1], Color.Green, SymbolType.None);
+            LineItem curve8 = pane3.AddCurve(classes[1], rList[1], Color.Green, SymbolType.None);
             curve8.Line.Width = 1;
-            LineItem curve9 = pane3.AddCurve("Space", rList[2], Color.Red, SymbolType.None);
+            LineItem curve9 = pane3.AddCurve(classes[2], rList[2], Color.Red, SymbolType.None);
             curve9.Line.Width = 1;
             //LineItem curve10 = pane3.AddCurve("Space", rList[3], Color.Black, SymbolType.None);
             //curve10.Line.Width = 1;
@@ -424,9 +248,304 @@ namespace Mamdani_Fuzzy
 
         }
 
-        private void Aggregate(string decision, double aggregate)
+        private void rules_Click(object sender, EventArgs e)
         {
+            for (int i=0; i< size; i++)
+            {
+                string[] args = new string[nIn];
+                double weight = 1;
 
+                for (int j = 0; j < nIn; j++)
+                {
+                    args[j] = categoryXL[i, j];
+                    weight *= m[i, j];
+                }
+                weight *= mY[i];
+
+                if (!rules.Contains(args))
+                    rules.addRule(args, categoryYL[i],weight);
+                else
+                {
+                    if (weight > rules.getWeight(args))
+                        rules.Replace(args, categoryYL[i], weight);
+                }
+            }
+            string[] values = rules.getValues();
+            string[][] keys = rules.getKeys();
+            List<PointPairList> sepRList;
+            PointPairList aggregated;
+            Dictionary<string, PointPairList> collection = new Dictionary<string, PointPairList>();
+            for (int i=0; i<size; i++)
+            {
+                double y = 0;
+                int first = 0, last=0,ind=0;
+                double m1 = 0, m2 = 0, max = double.MinValue;
+                double val = 0;
+                sepRList = Aggregate(i);
+                aggregated = AggregateSingle(sepRList);
+
+                for (int j=0; j<aggregated.Count; j++)
+                {
+                    m1 += aggregated[j].X * aggregated[j].Y;
+                    m2 += aggregated[j].Y;
+                }
+                rT[i] = m1 / m2;
+                for (int j=0;j<sepRList.Count; j++)
+                {
+                    for (int k=ind; k<sepRList[j].Count; k++)
+                    {
+                        if (rT[i]<=sepRList[j][k].X)
+                        {
+                            if (max < sepRList[j][k].Y)
+                            {
+                                max = sepRList[j][k].Y;
+                                first = j;
+                            }
+                            ind = k;
+                            break;
+                        }
+                    }
+                }
+                categoryYT1[i] = classes[first];
+
+                //collection.Clear();
+
+                //for (int k = 0; k < sepRList.Count; k++)
+                //    collection.Add(classes[k], sepRList[k]);
+                //for (int j=0; j<values.Length; j++)
+                //{
+                //first = last = 0;
+                //for (int k=0; k<collection[values[j]].Count-1; k++)
+                //{
+                //    if (collection[values[j]][k].Y > max)
+                //    {
+                //        max = collection[values[j]][k].Y;
+                //        first = k;
+                //    }
+                //    if (collection[values[j]][k].Y > collection[values[j]][k + 1].Y)
+                //    {
+                //        last = k;
+                //        val = collection[values[j]][first + ((last - first) / 2)].X;
+                //        break;
+                //    }
+                //}
+                //m2 += func.trimf(TestX[0][i], fuzzy.Set[keys[j][0]][0], fuzzy.Set[keys[j][0]][1], fuzzy.Set[keys[j][0]][2]) *
+                //    func.trimf(TestX[1][i], fuzzy.Set[keys[j][1]][0], fuzzy.Set[keys[j][1]][1], fuzzy.Set[keys[j][1]][2]);              //by keys we get the intervals from fuzzyset.Set and calculate trimf. Trimf for x1,x2, y For EACH rule in rule set
+                //m1 += m2 * val;
+
+                //}
+                //for (int i=0; i<)
+
+                dataGridView1.Rows[i].Cells["Rt"].Value = categoryYT1[i];
+                dataGridView1.Rows[i].Cells["R"].Value = Math.Round(rT[i], 1).ToString(); ;
+            }
+            showRules(rules);
+        }
+
+        private void showRules(FuzzyRules rls)
+        {
+            string[] values = rls.getValues();
+            string[][] args = rls.getKeys();
+            for (int i=3; i<keys.Length; i++)
+            {
+                dataGridView2.Columns.Add(keys[i], keys[i]);
+            }
+            dataGridView2.Rows.Add(nDiv);
+            dataGridView2.RowHeadersWidth = 110;
+            dataGridView2.Height = dataGridView2.Rows[0].Height * (dataGridView2.Rows.Count+2);
+            dataGridView2.Width = dataGridView2.Columns[0].Width * (dataGridView2.Columns.Count)+ dataGridView2.RowHeadersWidth;
+
+            for (int i=0; i<nDiv; i++)
+            {
+                dataGridView2.Rows[i].HeaderCell.Value = keys[i];
+            }
+
+            for (int i=0; i<values.Length; i++)
+            {
+                int index = 0;
+                for (int j=0; j< dataGridView2.Rows.Count-1; j++)
+                {
+                    if (dataGridView2.Rows[j].HeaderCell.Value.ToString() == args[i][0])
+                    {
+                        index = j;
+                        break;
+                    }
+                }
+                dataGridView2.Rows[index].Cells[args[i][1]].Value = values[i].ToString();
+            }
+
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            My_wang_Mendel(e.RowIndex);
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            My_wang_Mendel(dataGridView1.CurrentRow.Index);
+        }
+
+        private List<PointPairList> Aggregate(int index)
+        {
+            List<PointPairList> rCopy = new List<PointPairList>();
+            for (int i = 0; i < rList.Count; i++)
+            {
+                rCopy.Add(new PointPairList());
+                foreach (PointPair pp in rList[i])
+                {
+                    rCopy[i].Add(new PointPair(pp.X, pp.Y));
+                }
+            }
+            //pred = new Predicate<PointPair>(check);
+
+
+            for (int i = 0; i < rCopy.Count; i++)
+            {
+                //rCopy[i].RemoveAll(pred(removePoint));
+                bool flag = true;
+                while (flag)
+                {
+                    flag = false;
+                    for (int j = 0; j < rCopy[i].Count; j++)
+                    {
+                        if (rCopy[i][j].Y > mmY[index, i])
+                        {
+                            //rCopy[i].RemoveAt(j);
+                            rCopy[i][j].Y = mmY[index, i];
+                            flag = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            return rCopy;
+        }
+
+        private PointPairList AggregateSingle (List<PointPairList> rCopy)
+        {
+            PointPairList aggrList = new PointPairList();
+            for (int i = 0; i < rList.Count; i++)
+            {
+                for (int j = 0; j < rCopy[i].Count; j++)
+                {
+                    if (i != rList.Count - 1)
+                    {
+                        if (rCopy[i][j].Y >= rCopy[i + 1][j].Y)
+                        {
+                            aggrList.Add(rCopy[i][j]);
+                        }
+                        else i++;
+                    }
+                    else aggrList.Add(rCopy[i][j]);
+                }
+            }
+            return aggrList;
+
+        }
+
+        public void wang_Mendel(DataGridViewCellEventArgs e)
+        {
+            //zedGraphControl4.GraphPane.CurveList.Clear();
+            //zedGraphControl4.Invalidate();
+            //pane4 = zedGraphControl4.GraphPane;
+            //pane4.XAxis.Scale.Min = minGen;
+            //pane4.XAxis.Scale.Max = maxGen;
+            //int index = e.RowIndex;
+            //List<PointPairList> rCopy = new List<PointPairList>();
+            //PointPairList aggrList = new PointPairList();
+            //for (int i = 0; i < rList.Count; i++)
+            //{
+            //    rCopy.Add(new PointPairList());
+            //    foreach (PointPair pp in rList[i])
+            //    {
+            //        rCopy[i].Add(new PointPair(pp.X, pp.Y));
+            //    }
+            //}
+            //pred = new Predicate<PointPair>(check);
+
+
+            //for (int i = 0; i < rCopy.Count; i++)
+            //{
+            //    //rCopy[i].RemoveAll(pred(removePoint));
+            //    bool flag = true;
+            //    while (flag)
+            //    {
+            //        flag = false;
+            //        for (int j = 0; j < rCopy[i].Count; j++)
+            //        {
+            //            if (rCopy[i][j].Y > mm[index, i])
+            //            {
+            //                //rCopy[i].RemoveAt(j);
+            //                rCopy[i][j].Y = mm[index, i];
+            //                flag = true;
+            //                break;
+            //            }
+            //        }
+            //    }
+            //}
+            //for (int i = 0; i < rList.Count; i++)
+            //{
+            //    for (int j = 0; j < rCopy[i].Count; j++)
+            //    {
+            //        if (i != rList.Count - 1)
+            //        {
+            //            if (rCopy[i][j].Y >= rCopy[i + 1][j].Y)
+            //            {
+            //                aggrList.Add(rCopy[i][j]);
+            //            }
+            //            else i++;
+            //        }
+            //        else aggrList.Add(rCopy[i][j]);
+            //    }
+            //}
+
+            ////rCopy[0].Intersect<PointPairList>(rCopy[1]);
+            //LineItem curve11 = pane4.AddCurve("Aggregate", aggrList, Color.Purple, SymbolType.None);
+            //curve11.Line.Width = 2;
+
+            //LineItem curve7 = pane4.AddCurve("Very deep", rCopy[0], Color.Blue, SymbolType.None);
+            //curve7.Line.Width = 1;
+            //LineItem curve8 = pane4.AddCurve("Deep", rCopy[1], Color.Green, SymbolType.None);
+            //curve8.Line.Width = 1;
+            //LineItem curve9 = pane4.AddCurve("Surphace", rCopy[2], Color.Red, SymbolType.None);
+            //curve9.Line.Width = 1;
+            ////LineItem curve10 = pane4.AddCurve("Space", rCopy[3], Color.Black, SymbolType.Star);
+            ////curve10.Line.Width = 1;
+
+            //zedGraphControl4.AxisChange();
+            //zedGraphControl4.Invalidate();
+        }
+
+        public void My_wang_Mendel(int e)
+        {
+            zedGraphControl4.GraphPane.CurveList.Clear();
+            zedGraphControl4.Invalidate();
+            pane4 = zedGraphControl4.GraphPane;
+            pane4.XAxis.Scale.Min = minGen;
+            pane4.XAxis.Scale.Max = maxGen;
+            int index = e;
+
+            PointPairList aggrList = new PointPairList();
+            List<PointPairList> rCopy = Aggregate(index);
+            aggrList = AggregateSingle(rCopy);
+
+            
+
+            //rCopy[0].Intersect<PointPairList>(rCopy[1]);
+            LineItem curve11 = pane4.AddCurve("Aggregate", aggrList, Color.Purple, SymbolType.None);
+            curve11.Line.Width = 2;
+
+            LineItem curve7 = pane4.AddCurve(classes[0], rCopy[0], Color.Blue, SymbolType.None);
+            curve7.Line.Width = 1;
+            LineItem curve8 = pane4.AddCurve(classes[1], rCopy[1], Color.Green, SymbolType.None);
+            curve8.Line.Width = 1;
+            LineItem curve9 = pane4.AddCurve(classes[2], rCopy[2], Color.Red, SymbolType.None);
+            curve9.Line.Width = 1;
+
+            zedGraphControl4.AxisChange();
+            zedGraphControl4.Invalidate();
         }
 
 
@@ -435,8 +554,11 @@ namespace Mamdani_Fuzzy
             Random rn = new Random();
             dataGridView1.Columns.Add("X", "Pressure");
             dataGridView1.Columns.Add("Y", "Temperature");
-            dataGridView1.Columns.Add("R", "Decision");
-            
+            dataGridView1.Columns.Add("Rt", "DecisionTest");
+            dataGridView1.Columns.Add("Rtr", "DecisionTrue");
+            dataGridView1.Columns.Add("R", "DecisionNumerical");
+
+
             string[] decisions = new string[LearningX.Count];
             mm = new List<double[,]>();
             mmY = new double[size,rFuzzy.Set.Count];//wartosci regul dla agregacji
@@ -477,7 +599,7 @@ namespace Mamdani_Fuzzy
                                 ms[j][h, j] = membershipIn[j][k, h];
                                 if (max < ms[j][h, j])
                                 {
-                                    mi = h;
+                                    mi = h+j*nDiv;
                                     max = ms[j][h, j];
                                 }
                             }
