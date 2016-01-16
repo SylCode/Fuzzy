@@ -18,17 +18,46 @@ namespace Mamdani_Fuzzy
         double[] rL,mY,rT;
         string[] categoryYL, categoryYT1, categoryYT2;
         List<double[,]> membershipIn, membershipOut,mm;
+        List<DeFuzzySet> inputDef;
+        FuzzyRules rules;
+        List<PointPairList> list, rList;
+        List<int[]> data;
+        string[] keys, classes;
         double[,] mmY,m;
         string[,] categoryXL;
         List<double[]>  genData,LearningX,LearningY,TestX,TestY;
         List<string[]> decisions;
         Membership func;
         FuzzySet fuzzy, rFuzzy;
-        List<DeFuzzySet> inputDef;
-        FuzzyRules rules;
-        List<PointPairList> list, rList;
-        List<int[]> data;
-        string[] keys, classes;
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            nDiv = 3;
+            initData();
+            initParams();
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+            nDiv = 5;
+            initData();
+            initParams();
+        }
+
 
         bool check (PointPair pp)
         {
@@ -37,7 +66,13 @@ namespace Mamdani_Fuzzy
 
         public Form1()
         {
+            InitializeComponent();
+            initData();
+            initParams();
+        }
 
+        private void initData()
+        {
             membershipIn = new List<double[,]>();
             membershipOut = new List<double[,]>();
 
@@ -69,45 +104,58 @@ namespace Mamdani_Fuzzy
             keys = new string[nDiv * nIn];
             classes = new string[nDiv];
 
-            for (int i=0; i<nDiv*nIn; i++)
+            for (int i = 0; i < nDiv * nIn; i++)
             {
-                if (i<nDiv)
+                if (i < nDiv)
                 {
                     keys[i] = i + "A" + i;
                     classes[i] = i + "B" + i;
                 }
                 else
                 {
-                    keys[i] = (i-nDiv) + "A." + (i-nDiv);
+                    keys[i] = (i - nDiv) + "A." + (i - nDiv);
                 }
             }
             //keys = new string[] { "Low", "Medium", "High Pressure", "Cold","Warm", "Hot"};
             //classes = new string[] { "Space", "Norm", "Deep" };
 
+            int ln = nDiv + 1;
+            int d = (Math.Abs(minGen) + Math.Abs(maxGen)) / ln;
+            if (nDiv == 3)
+            {
+                data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
+                data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
+                data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, maxGen });
 
-            int d = (Math.Abs(minGen) + Math.Abs(maxGen))/4;
+                data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
+                data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
+                data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, maxGen });
 
-            data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
-            data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
-            data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, maxGen });
+                data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
+                data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
+                data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, maxGen });
+            }
+            else
+            {
+                data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
+                data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
+                data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d });
+                data.Add(new int[] { minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
+                data.Add(new int[] { minGen + 4 * d, minGen + 5 * d, maxGen });
 
-            data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
-            data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
-            data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, maxGen });
+                data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
+                data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
+                data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d });
+                data.Add(new int[] { minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
+                data.Add(new int[] { minGen + 4 * d, minGen + 5 * d, maxGen });
 
-            data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
-            data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
-            data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, maxGen });
+                data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
+                data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
+                data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d });
+                data.Add(new int[] { minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
+                data.Add(new int[] { minGen + 4 * d, minGen + 5 * d, maxGen });
+            }
 
-            //rules.addRule(new string[] {"Low", "Cold" }, classes[2]);
-            //rules.addRule(new string[] { "Low", "Warm" }, classes[2]);
-            //rules.addRule(new string[] { "Low", "Hot" }, classes[2]);
-            //rules.addRule(new string[] { "Medium", "Cold" }, classes[1]);
-            //rules.addRule(new string[] { "Medium", "Warm" }, classes[1]);
-            //rules.addRule(new string[] { "Medium", "Hot" }, classes[1]);
-            //rules.addRule(new string[] { "High Pressure", "Cold" }, classes[1]);
-            //rules.addRule(new string[] { "High Pressure", "Warm" }, classes[1]);
-            //rules.addRule(new string[] { "High Pressure", "Hot" }, classes[0]);
 
             int ct = 0;
             foreach (string obj in keys)
@@ -120,9 +168,9 @@ namespace Mamdani_Fuzzy
                 rFuzzy.Set.Add(obj, data[ct]);
                 ct++;
             }
-            for (int i=0; i< nIn; i++)
+            for (int i = 0; i < nIn; i++)
             {
-                LearningX.Add(new double[size+1]);
+                LearningX.Add(new double[size + 1]);
                 TestX.Add(new double[size + 1]);
 
                 genData.Add(new double[size]);
@@ -130,10 +178,7 @@ namespace Mamdani_Fuzzy
             LearningY.Add(new double[size]);
             TestY.Add(new double[size]);
 
-            rL = new double[size+1];
-            
-            InitializeComponent();
-            initParams();
+            rL = new double[size + 1];
         }
 
         private void initParams()
@@ -167,7 +212,7 @@ namespace Mamdani_Fuzzy
             for (int k=0; k< membershipIn.Count; k++)
             {
                 LearningX[k][0] = fuzzy.Set[keys[n]][0];
-                for (int i = 0; i < membershipIn[k].Length / 3; i++)
+                for (int i = 0; i < membershipIn[k].Length / nDiv; i++)
                 {
                     for (int j = n; j < n + nDiv; j++)
                     {
@@ -175,7 +220,7 @@ namespace Mamdani_Fuzzy
                         list[j].Add(LearningX[k][i], membershipIn[k][i, ct]);
                         ct++;
                     }
-                    if (i+1!= membershipIn[k].Length / 3)
+                    if (i+1!= membershipIn[k].Length / nDiv)
                         LearningX[k][i+1] = LearningX[k][i]+1;
                     ct = 0;
                     
@@ -213,27 +258,66 @@ namespace Mamdani_Fuzzy
             pane3.XAxis.Scale.Min = minGen;
             pane3.XAxis.Scale.Max = maxGen;
 
+            if (nDiv == 3)
+            {
+                LineItem curve1 = pane1.AddCurve(keys[0], list[0], Color.Blue, SymbolType.None);
+                curve1.Line.Width = 2;
+                LineItem curve2 = pane1.AddCurve(keys[1], list[1], Color.Green, SymbolType.None);
+                curve2.Line.Width = 2;
+                LineItem curve3 = pane1.AddCurve(keys[2], list[2], Color.Red, SymbolType.None);
+                curve3.Line.Width = 2;
 
-            LineItem curve1 = pane1.AddCurve(keys[0], list[0], Color.Blue, SymbolType.None);
-            curve1.Line.Width = 1;
-            LineItem curve2 = pane1.AddCurve(keys[1], list[1],Color.Green, SymbolType.None);
-            curve2.Line.Width = 1;
-            LineItem curve3 = pane1.AddCurve(keys[2], list[2], Color.Red, SymbolType.None);
-            curve3.Line.Width = 1;
+                LineItem curve4 = pane2.AddCurve(keys[3], list[3], Color.Blue, SymbolType.None);
+                curve4.Line.Width = 2;
+                LineItem curve5 = pane2.AddCurve(keys[4], list[4], Color.Green, SymbolType.None);
+                curve5.Line.Width = 2;
+                LineItem curve6 = pane2.AddCurve(keys[5], list[5], Color.Red, SymbolType.None);
+                curve6.Line.Width = 2;
 
-            LineItem curve4 = pane2.AddCurve(keys[3], list[3], Color.Blue, SymbolType.None);
-            curve4.Line.Width = 1;
-            LineItem curve5 = pane2.AddCurve(keys[4], list[4], Color.Green, SymbolType.None);
-            curve5.Line.Width = 1;
-            LineItem curve6 = pane2.AddCurve(keys[5], list[5], Color.Red, SymbolType.None);
-            curve6.Line.Width = 1;
+                LineItem curve7 = pane3.AddCurve(classes[0], rList[0], Color.Blue, SymbolType.None);
+                curve7.Line.Width = 2;
+                LineItem curve8 = pane3.AddCurve(classes[1], rList[1], Color.Green, SymbolType.None);
+                curve8.Line.Width = 2;
+                LineItem curve9 = pane3.AddCurve(classes[2], rList[2], Color.Red, SymbolType.None);
+                curve9.Line.Width = 2;
+            }
 
-            LineItem curve7 = pane3.AddCurve(classes[0], rList[0], Color.Blue, SymbolType.None);
-            curve7.Line.Width = 1;
-            LineItem curve8 = pane3.AddCurve(classes[1], rList[1], Color.Green, SymbolType.None);
-            curve8.Line.Width = 1;
-            LineItem curve9 = pane3.AddCurve(classes[2], rList[2], Color.Red, SymbolType.None);
-            curve9.Line.Width = 1;
+            if (nDiv==5)
+            {
+                LineItem curve1 = pane1.AddCurve(keys[0], list[0], Color.Blue, SymbolType.None);
+                curve1.Line.Width = 2;
+                LineItem curve2 = pane1.AddCurve(keys[1], list[1], Color.Green, SymbolType.None);
+                curve2.Line.Width = 2;
+                LineItem curve3 = pane1.AddCurve(keys[2], list[2], Color.Red, SymbolType.None);
+                curve3.Line.Width = 2;
+                LineItem curve11 = pane1.AddCurve(keys[3], list[3], Color.Indigo, SymbolType.None);
+                curve11.Line.Width = 2;
+                LineItem curve12 = pane1.AddCurve(keys[4], list[4], Color.Black, SymbolType.None);
+                curve12.Line.Width = 2;
+
+                LineItem curve4 = pane2.AddCurve(keys[5], list[5], Color.Blue, SymbolType.None);
+                curve4.Line.Width = 2;
+                LineItem curve5 = pane2.AddCurve(keys[6], list[6], Color.Green, SymbolType.None);
+                curve5.Line.Width = 2;
+                LineItem curve6 = pane2.AddCurve(keys[7], list[7], Color.Red, SymbolType.None);
+                curve6.Line.Width = 2;
+                LineItem curve13 = pane2.AddCurve(keys[8], list[8], Color.Indigo, SymbolType.None);
+                curve13.Line.Width = 2;
+                LineItem curve14 = pane2.AddCurve(keys[9], list[9], Color.Black, SymbolType.None);
+                curve14.Line.Width = 2;
+
+                LineItem curve7 = pane3.AddCurve(classes[0], rList[0], Color.Blue, SymbolType.None);
+                curve7.Line.Width = 2;
+                LineItem curve8 = pane3.AddCurve(classes[1], rList[1], Color.Green, SymbolType.None);
+                curve8.Line.Width = 2;
+                LineItem curve9 = pane3.AddCurve(classes[2], rList[2], Color.Red, SymbolType.None);
+                curve9.Line.Width = 2;
+                LineItem curve15 = pane3.AddCurve(classes[3], rList[3], Color.Indigo, SymbolType.None);
+                curve15.Line.Width = 2;
+                LineItem curve16 = pane3.AddCurve(classes[4], rList[4], Color.Black, SymbolType.None);
+                curve16.Line.Width = 2;
+
+            }
             //LineItem curve10 = pane3.AddCurve("Space", rList[3], Color.Black, SymbolType.None);
             //curve10.Line.Width = 1;
 
@@ -250,6 +334,8 @@ namespace Mamdani_Fuzzy
 
         private void rules_Click(object sender, EventArgs e)
         {
+            dataGridView2.Rows.Clear();
+            dataGridView2.Columns.Clear();
             for (int i=0; i< size; i++)
             {
                 string[] args = new string[nIn];
@@ -290,6 +376,10 @@ namespace Mamdani_Fuzzy
                     m2 += aggregated[j].Y;
                 }
                 rT[i] = m1 / m2;
+                if (double.IsNaN(rT[i]))
+                {
+                    rT[i] = 0;
+                }
                 for (int j=0;j<sepRList.Count; j++)
                 {
                     for (int k=ind; k<sepRList[j].Count; k++)
@@ -306,54 +396,60 @@ namespace Mamdani_Fuzzy
                         }
                     }
                 }
+                ind = 0;
                 categoryYT1[i] = classes[first];
 
-                //collection.Clear();
+                categoryYT2[i] = rules.checkRule(new string[] { categoryXL[i, 0], categoryXL[i, 1] });
 
-                //for (int k = 0; k < sepRList.Count; k++)
-                //    collection.Add(classes[k], sepRList[k]);
-                //for (int j=0; j<values.Length; j++)
-                //{
-                //first = last = 0;
-                //for (int k=0; k<collection[values[j]].Count-1; k++)
-                //{
-                //    if (collection[values[j]][k].Y > max)
-                //    {
-                //        max = collection[values[j]][k].Y;
-                //        first = k;
-                //    }
-                //    if (collection[values[j]][k].Y > collection[values[j]][k + 1].Y)
-                //    {
-                //        last = k;
-                //        val = collection[values[j]][first + ((last - first) / 2)].X;
-                //        break;
-                //    }
-                //}
-                //m2 += func.trimf(TestX[0][i], fuzzy.Set[keys[j][0]][0], fuzzy.Set[keys[j][0]][1], fuzzy.Set[keys[j][0]][2]) *
-                //    func.trimf(TestX[1][i], fuzzy.Set[keys[j][1]][0], fuzzy.Set[keys[j][1]][1], fuzzy.Set[keys[j][1]][2]);              //by keys we get the intervals from fuzzyset.Set and calculate trimf. Trimf for x1,x2, y For EACH rule in rule set
-                //m1 += m2 * val;
-
-                //}
-                //for (int i=0; i<)
-
+                
                 dataGridView1.Rows[i].Cells["Rt"].Value = categoryYT1[i];
-                dataGridView1.Rows[i].Cells["R"].Value = Math.Round(rT[i], 1).ToString(); ;
+                dataGridView1.Rows[i].Cells["Rtr"].Value = categoryYT2[i];
+                dataGridView1.Rows[i].Cells["Rntr"].Value = Math.Round(TestY[0][i], 1).ToString();
+                dataGridView1.Rows[i].Cells["R"].Value = Math.Round(rT[i], 1).ToString();
             }
             showRules(rules);
+            CheckError();
+        }
+
+        private void CheckError()
+        {
+            double msre, sum=0;
+            int n = 0;
+            for (int i=0; i< size; i++)
+            {
+                if (Math.Abs(Convert.ToDouble(dataGridView1.Rows[i].Cells["Rntr"].Value)
+                    - Convert.ToDouble(dataGridView1.Rows[i].Cells["R"].Value)) <= 15)
+                {
+                    dataGridView1.Rows[i].Cells["Rt"].Value = dataGridView1.Rows[i].Cells["Rtr"].Value;
+                }   
+                dataGridView1.Rows[i].Cells["Rtr"].Style.BackColor = Color.Green;
+                if (dataGridView1.Rows[i].Cells["Rt"].Value != dataGridView1.Rows[i].Cells["Rtr"].Value)
+                {
+                    dataGridView1.Rows[i].Cells["Rt"].Style.BackColor = Color.Red;
+                    n++;
+                    sum += Math.Pow(TestY[0][i] - rT[i], 2);
+                }
+                else
+                {
+                    dataGridView1.Rows[i].Cells["Rt"].Style.BackColor = Color.Green;
+                }
+            }
+            NRlabel.Text = ((double)n / (double)size * 100).ToString()+ "%";
+            msre = Math.Sqrt(sum / n);
+            MSRELabel.Text = Math.Round(msre, 4).ToString();
         }
 
         private void showRules(FuzzyRules rls)
         {
             string[] values = rls.getValues();
             string[][] args = rls.getKeys();
-            for (int i=3; i<keys.Length; i++)
+            for (int i=nDiv; i<nDiv*nIn; i++)
             {
                 dataGridView2.Columns.Add(keys[i], keys[i]);
             }
             dataGridView2.Rows.Add(nDiv);
             dataGridView2.RowHeadersWidth = 110;
             dataGridView2.Height = dataGridView2.Rows[0].Height * (dataGridView2.Rows.Count+2);
-            dataGridView2.Width = dataGridView2.Columns[0].Width * (dataGridView2.Columns.Count)+ dataGridView2.RowHeadersWidth;
 
             for (int i=0; i<nDiv; i++)
             {
@@ -363,6 +459,7 @@ namespace Mamdani_Fuzzy
             for (int i=0; i<values.Length; i++)
             {
                 int index = 0;
+                int ct = 0;
                 for (int j=0; j< dataGridView2.Rows.Count-1; j++)
                 {
                     if (dataGridView2.Rows[j].HeaderCell.Value.ToString() == args[i][0])
@@ -532,22 +629,35 @@ namespace Mamdani_Fuzzy
             aggrList = AggregateSingle(rCopy);
 
             
-
-            //rCopy[0].Intersect<PointPairList>(rCopy[1]);
+            
             LineItem curve11 = pane4.AddCurve("Aggregate", aggrList, Color.Purple, SymbolType.None);
             curve11.Line.Width = 2;
-
-            LineItem curve7 = pane4.AddCurve(classes[0], rCopy[0], Color.Blue, SymbolType.None);
-            curve7.Line.Width = 1;
-            LineItem curve8 = pane4.AddCurve(classes[1], rCopy[1], Color.Green, SymbolType.None);
-            curve8.Line.Width = 1;
-            LineItem curve9 = pane4.AddCurve(classes[2], rCopy[2], Color.Red, SymbolType.None);
-            curve9.Line.Width = 1;
+            if (nDiv == 3)
+            {
+                LineItem curve7 = pane4.AddCurve(classes[0], rCopy[0], Color.Blue, SymbolType.None);
+                curve7.Line.Width = 1;
+                LineItem curve8 = pane4.AddCurve(classes[1], rCopy[1], Color.Green, SymbolType.None);
+                curve8.Line.Width = 1;
+                LineItem curve9 = pane4.AddCurve(classes[2], rCopy[2], Color.Red, SymbolType.None);
+                curve9.Line.Width = 1;
+            }
+            else
+            {
+                LineItem curve7 = pane4.AddCurve(classes[0], rCopy[0], Color.Blue, SymbolType.None);
+                curve7.Line.Width = 1;
+                LineItem curve8 = pane4.AddCurve(classes[1], rCopy[1], Color.Green, SymbolType.None);
+                curve8.Line.Width = 1;
+                LineItem curve9 = pane4.AddCurve(classes[2], rCopy[2], Color.Red, SymbolType.None);
+                curve9.Line.Width = 1;
+                LineItem curve10 = pane4.AddCurve(classes[3], rCopy[3], Color.Indigo, SymbolType.None);
+                curve10.Line.Width = 1;
+                LineItem curve20 = pane4.AddCurve(classes[4], rCopy[4], Color.Black, SymbolType.None);
+                curve20.Line.Width = 1;
+            }
 
             zedGraphControl4.AxisChange();
             zedGraphControl4.Invalidate();
         }
-
 
         private void generateButton_Click(object sender, EventArgs e)
         {
@@ -556,7 +666,8 @@ namespace Mamdani_Fuzzy
             dataGridView1.Columns.Add("Y", "Temperature");
             dataGridView1.Columns.Add("Rt", "DecisionTest");
             dataGridView1.Columns.Add("Rtr", "DecisionTrue");
-            dataGridView1.Columns.Add("R", "DecisionNumerical");
+            dataGridView1.Columns.Add("R", "NumericalTest");
+            dataGridView1.Columns.Add("Rntr", "NumericalTrue");
 
 
             string[] decisions = new string[LearningX.Count];
@@ -579,10 +690,10 @@ namespace Mamdani_Fuzzy
                 for (int z =0; z< nIn; z++)
                 {
                     genData[z][i] = rn.Next(minGen, maxGen);
-                    TestX[z][i] = rn.Next(minGen, maxGen);
+                    TestX[z][i] = genData[z][i];// rn.Next(minGen, maxGen);
                 }
                 LearningY[0][i] = rn.Next(minGen, maxGen);
-                TestY[0][i] = rn.Next(minGen, maxGen);
+                TestY[0][i] = LearningY[0][i];// rn.Next(minGen, maxGen);
 
                 dataGridView1.Rows.Add(new string[]{ TestX[0][i].ToString(), TestX[1][i].ToString() });
                 double max = Double.MinValue;
