@@ -35,6 +35,7 @@
             this.zedGraphControl2 = new ZedGraph.ZedGraphControl();
             this.zedGraphControl3 = new ZedGraph.ZedGraphControl();
             this.zedGraphControl4 = new ZedGraph.ZedGraphControl();
+            this.rulesButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,7 +52,7 @@
             // 
             // generateButton
             // 
-            this.generateButton.Location = new System.Drawing.Point(136, 2);
+            this.generateButton.Location = new System.Drawing.Point(12, 2);
             this.generateButton.Name = "generateButton";
             this.generateButton.Size = new System.Drawing.Size(75, 23);
             this.generateButton.TabIndex = 1;
@@ -119,11 +120,22 @@
             this.zedGraphControl4.TabIndex = 5;
             this.zedGraphControl4.UseExtendedPrintDialog = true;
             // 
+            // rulesButton
+            // 
+            this.rulesButton.Location = new System.Drawing.Point(135, 2);
+            this.rulesButton.Name = "rulesButton";
+            this.rulesButton.Size = new System.Drawing.Size(75, 23);
+            this.rulesButton.TabIndex = 6;
+            this.rulesButton.Text = "Rules";
+            this.rulesButton.UseVisualStyleBackColor = true;
+            this.rulesButton.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1452, 836);
+            this.Controls.Add(this.rulesButton);
             this.Controls.Add(this.zedGraphControl4);
             this.Controls.Add(this.zedGraphControl3);
             this.Controls.Add(this.zedGraphControl2);
@@ -146,6 +158,7 @@
         private ZedGraph.ZedGraphControl zedGraphControl2;
         private ZedGraph.ZedGraphControl zedGraphControl3;
         private ZedGraph.ZedGraphControl zedGraphControl4;
+        private System.Windows.Forms.Button rulesButton;
     }
 }
 
