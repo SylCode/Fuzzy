@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZedGraph;
 
@@ -434,8 +429,6 @@ namespace Mamdani_Fuzzy
                 curve16.Line.Width = 2;
 
             }
-            //LineItem curve10 = pane3.AddCurve("Space", rList[3], Color.Black, SymbolType.None);
-            //curve10.Line.Width = 1;
 
 
             zedGraphControl1.AxisChange();
@@ -615,12 +608,10 @@ namespace Mamdani_Fuzzy
                     rCopy[i].Add(new PointPair(pp.X, pp.Y));
                 }
             }
-            //pred = new Predicate<PointPair>(check);
 
 
             for (int i = 0; i < rCopy.Count; i++)
             {
-                //rCopy[i].RemoveAll(pred(removePoint));
                 bool flag = true;
                 while (flag)
                 {
@@ -629,7 +620,6 @@ namespace Mamdani_Fuzzy
                     {
                         if (rCopy[i][j].Y > mmY[index, i])
                         {
-                            //rCopy[i].RemoveAt(j);
                             rCopy[i][j].Y = mmY[index, i];
                             flag = true;
                             break;
@@ -663,78 +653,7 @@ namespace Mamdani_Fuzzy
 
         }
 
-        public void wang_Mendel(DataGridViewCellEventArgs e)
-        {
-            //zedGraphControl4.GraphPane.CurveList.Clear();
-            //zedGraphControl4.Invalidate();
-            //pane4 = zedGraphControl4.GraphPane;
-            //pane4.XAxis.Scale.Min = minGen;
-            //pane4.XAxis.Scale.Max = maxGen;
-            //int index = e.RowIndex;
-            //List<PointPairList> rCopy = new List<PointPairList>();
-            //PointPairList aggrList = new PointPairList();
-            //for (int i = 0; i < rList.Count; i++)
-            //{
-            //    rCopy.Add(new PointPairList());
-            //    foreach (PointPair pp in rList[i])
-            //    {
-            //        rCopy[i].Add(new PointPair(pp.X, pp.Y));
-            //    }
-            //}
-            //pred = new Predicate<PointPair>(check);
-
-
-            //for (int i = 0; i < rCopy.Count; i++)
-            //{
-            //    //rCopy[i].RemoveAll(pred(removePoint));
-            //    bool flag = true;
-            //    while (flag)
-            //    {
-            //        flag = false;
-            //        for (int j = 0; j < rCopy[i].Count; j++)
-            //        {
-            //            if (rCopy[i][j].Y > mm[index, i])
-            //            {
-            //                //rCopy[i].RemoveAt(j);
-            //                rCopy[i][j].Y = mm[index, i];
-            //                flag = true;
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
-            //for (int i = 0; i < rList.Count; i++)
-            //{
-            //    for (int j = 0; j < rCopy[i].Count; j++)
-            //    {
-            //        if (i != rList.Count - 1)
-            //        {
-            //            if (rCopy[i][j].Y >= rCopy[i + 1][j].Y)
-            //            {
-            //                aggrList.Add(rCopy[i][j]);
-            //            }
-            //            else i++;
-            //        }
-            //        else aggrList.Add(rCopy[i][j]);
-            //    }
-            //}
-
-            ////rCopy[0].Intersect<PointPairList>(rCopy[1]);
-            //LineItem curve11 = pane4.AddCurve("Aggregate", aggrList, Color.Purple, SymbolType.None);
-            //curve11.Line.Width = 2;
-
-            //LineItem curve7 = pane4.AddCurve("Very deep", rCopy[0], Color.Blue, SymbolType.None);
-            //curve7.Line.Width = 1;
-            //LineItem curve8 = pane4.AddCurve("Deep", rCopy[1], Color.Green, SymbolType.None);
-            //curve8.Line.Width = 1;
-            //LineItem curve9 = pane4.AddCurve("Surphace", rCopy[2], Color.Red, SymbolType.None);
-            //curve9.Line.Width = 1;
-            ////LineItem curve10 = pane4.AddCurve("Space", rCopy[3], Color.Black, SymbolType.Star);
-            ////curve10.Line.Width = 1;
-
-            //zedGraphControl4.AxisChange();
-            //zedGraphControl4.Invalidate();
-        }
+        
 
         public void My_wang_Mendel(int e)
         {
