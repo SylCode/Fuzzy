@@ -147,6 +147,7 @@
             // 
             // rulesButton
             // 
+            this.rulesButton.Enabled = false;
             this.rulesButton.Location = new System.Drawing.Point(33, 175);
             this.rulesButton.Name = "rulesButton";
             this.rulesButton.Size = new System.Drawing.Size(75, 23);
