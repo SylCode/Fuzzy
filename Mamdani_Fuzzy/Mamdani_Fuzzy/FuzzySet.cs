@@ -8,11 +8,11 @@ namespace Mamdani_Fuzzy
 {
     class FuzzySet
     {
-        public Dictionary<string, int[]> Set;
+        public Dictionary<string, double[]> Set;
 
         public FuzzySet()
         {
-            Set = new Dictionary<string, int[]>();
+            Set = new Dictionary<string, double[]>();
         }
         
     }

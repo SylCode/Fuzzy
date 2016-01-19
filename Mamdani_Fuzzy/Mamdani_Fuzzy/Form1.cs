@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using ZedGraph;
 
@@ -11,7 +12,10 @@ namespace Mamdani_Fuzzy
         GraphPane pane1, pane2, pane3, pane4;
         int cot = 0;
         string fu = "tr";
-        int size = 300, nIn=2, nDiv=3, minGen=-100,maxGen=100;
+        string path = @"D:\CurrentStudy\Fuzzy-master\Mamdani_Fuzzy\Mamdani_Fuzzy\bin\Debug\1dim.txt";
+           
+        int size = 300, nIn=2, nDiv=3;
+        double minGen=0,maxGen=5;
         double msre = 0;
         double[] rL,mY,rT;
         string[] categoryYL, categoryYT1, categoryYT2;
@@ -19,7 +23,7 @@ namespace Mamdani_Fuzzy
         List<DeFuzzySet> inputDef;
         FuzzyRules rules;
         List<PointPairList> list, rList;
-        List<int[]> data;
+        List<double[]> data;
         string[] keys, classes;
         double[,] mmY,m;
         string[,] categoryXL;
@@ -101,7 +105,7 @@ namespace Mamdani_Fuzzy
             inputDef = new List<DeFuzzySet>();
 
 
-            data = new List<int[]>();
+            data = new List<double[]>();
             rules = new FuzzyRules();
             fuzzy = new FuzzySet();
             rFuzzy = new FuzzySet();
@@ -109,7 +113,7 @@ namespace Mamdani_Fuzzy
 
             keys = new string[nDiv * nIn];
             classes = new string[nDiv];
-            int d = 0;
+            double d = 0;
             for (int i = 0; i < nDiv * nIn; i++)
             {
                 if (i < nDiv)
@@ -125,126 +129,126 @@ namespace Mamdani_Fuzzy
             if (fu == "tr")
             {
                 int ln = nDiv + 1;
-                d = (Math.Abs(minGen) + Math.Abs(maxGen)) / ln;
+                d = (minGen + maxGen) / ln;
             }
             else if (fu == "trap")
             {
                 if (nDiv==3)
-                    d= (Math.Abs(minGen) + Math.Abs(maxGen)) / 7;
-                else d = (Math.Abs(minGen) + Math.Abs(maxGen)) / 11;
+                    d= (minGen + maxGen) / 7;
+                else d = (minGen + maxGen) / 11;
             }
             else if (fu == "gauss")
             {
                 int ln = nDiv + 1;
-                d = (Math.Abs(minGen) + Math.Abs(maxGen)) / ln;
+                d = (minGen + maxGen) / ln;
             }
 
             if (nDiv == 3)
             {
                 if (fu == "tr")
                 {
-                    data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
-                    data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
-                    data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, maxGen });
+                    data.Add(new double[] { minGen, minGen + d, minGen + 2 * d });
+                    data.Add(new double[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
+                    data.Add(new double[] { minGen + 2 * d, minGen + 3 * d, maxGen });
 
-                    data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
-                    data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
-                    data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, maxGen });
+                    data.Add(new double[] { minGen, minGen + d, minGen + 2 * d });
+                    data.Add(new double[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
+                    data.Add(new double[] { minGen + 2 * d, minGen + 3 * d, maxGen });
 
-                    data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
-                    data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
-                    data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, maxGen });
+                    data.Add(new double[] { minGen, minGen + d, minGen + 2 * d });
+                    data.Add(new double[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
+                    data.Add(new double[] { minGen + 2 * d, minGen + 3 * d, maxGen });
                 }
                 else if (fu == "trap")
                 {
-                    data.Add(new int[] { minGen, minGen + d, minGen + 2 * d, minGen + 3 * d });
-                    data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
-                    data.Add(new int[] { minGen + 4 * d, minGen + 5 * d, minGen + 6 * d, maxGen });
+                    data.Add(new double[] { minGen, minGen + d, minGen + 2 * d, minGen + 3 * d });
+                    data.Add(new double[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
+                    data.Add(new double[] { minGen + 4 * d, minGen + 5 * d, minGen + 6 * d, maxGen });
 
-                    data.Add(new int[] { minGen, minGen + d, minGen + 2 * d, minGen + 3 * d });
-                    data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
-                    data.Add(new int[] { minGen + 4 * d, minGen + 5 * d, minGen + 6 * d, maxGen });
+                    data.Add(new double[] { minGen, minGen + d, minGen + 2 * d, minGen + 3 * d });
+                    data.Add(new double[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
+                    data.Add(new double[] { minGen + 4 * d, minGen + 5 * d, minGen + 6 * d, maxGen });
 
-                    data.Add(new int[] { minGen, minGen + d, minGen + 2 * d, minGen + 3 * d });
-                    data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
-                    data.Add(new int[] { minGen + 4 * d, minGen + 5 * d, minGen + 6 * d, maxGen });
+                    data.Add(new double[] { minGen, minGen + d, minGen + 2 * d, minGen + 3 * d });
+                    data.Add(new double[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
+                    data.Add(new double[] { minGen + 4 * d, minGen + 5 * d, minGen + 6 * d, maxGen });
                 }
                 else if (fu == "gauss")
                 {
-                    data.Add(new int[] { minGen + d, d/3 });
-                    data.Add(new int[] { minGen + 2 * d, d / 3 });
-                    data.Add(new int[] { minGen + 3 * d, d / 3 });
+                    data.Add(new double[] { minGen + d, d/3 });
+                    data.Add(new double[] { minGen + 2 * d, d / 3 });
+                    data.Add(new double[] { minGen + 3 * d, d / 3 });
 
-                    data.Add(new int[] { minGen + d, d / 3 });
-                    data.Add(new int[] { minGen + 2 * d, d / 3 });
-                    data.Add(new int[] { minGen + 3 * d, d / 3 });
+                    data.Add(new double[] { minGen + d, d / 3 });
+                    data.Add(new double[] { minGen + 2 * d, d / 3 });
+                    data.Add(new double[] { minGen + 3 * d, d / 3 });
 
-                    data.Add(new int[] { minGen + d, d / 3 });
-                    data.Add(new int[] { minGen + 2 * d, d / 3 });
-                    data.Add(new int[] { minGen + 3 * d, d / 3 });
+                    data.Add(new double[] { minGen + d, d / 3 });
+                    data.Add(new double[] { minGen + 2 * d, d / 3 });
+                    data.Add(new double[] { minGen + 3 * d, d / 3 });
                 }
             }
             else
             {
                 if (fu == "tr")
                 {
-                    data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
-                    data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
-                    data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d });
-                    data.Add(new int[] { minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
-                    data.Add(new int[] { minGen + 4 * d, minGen + 5 * d, maxGen });
+                    data.Add(new double[] { minGen, minGen + d, minGen + 2 * d });
+                    data.Add(new double[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
+                    data.Add(new double[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d });
+                    data.Add(new double[] { minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
+                    data.Add(new double[] { minGen + 4 * d, minGen + 5 * d, maxGen });
 
-                    data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
-                    data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
-                    data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d });
-                    data.Add(new int[] { minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
-                    data.Add(new int[] { minGen + 4 * d, minGen + 5 * d, maxGen });
+                    data.Add(new double[] { minGen, minGen + d, minGen + 2 * d });
+                    data.Add(new double[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
+                    data.Add(new double[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d });
+                    data.Add(new double[] { minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
+                    data.Add(new double[] { minGen + 4 * d, minGen + 5 * d, maxGen });
 
-                    data.Add(new int[] { minGen, minGen + d, minGen + 2 * d });
-                    data.Add(new int[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
-                    data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d });
-                    data.Add(new int[] { minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
-                    data.Add(new int[] { minGen + 4 * d, minGen + 5 * d, maxGen });
+                    data.Add(new double[] { minGen, minGen + d, minGen + 2 * d });
+                    data.Add(new double[] { minGen + d, minGen + 2 * d, minGen + 3 * d });
+                    data.Add(new double[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d });
+                    data.Add(new double[] { minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
+                    data.Add(new double[] { minGen + 4 * d, minGen + 5 * d, maxGen });
                 }
                 else if (fu == "trap")
                 {
-                    data.Add(new int[] { minGen, minGen + d, minGen + 2 * d, minGen + 3 * d });
-                    data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
-                    data.Add(new int[] { minGen + 4 * d, minGen + 5 * d, minGen + 6 * d, minGen + 7 * d });
-                    data.Add(new int[] { minGen + 6 * d, minGen + 7 * d, minGen + 8 * d, minGen + 9 * d });
-                    data.Add(new int[] { minGen + 8 * d, minGen + 9 * d, minGen + 10 * d, maxGen });
+                    data.Add(new double[] { minGen, minGen + d, minGen + 2 * d, minGen + 3 * d });
+                    data.Add(new double[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
+                    data.Add(new double[] { minGen + 4 * d, minGen + 5 * d, minGen + 6 * d, minGen + 7 * d });
+                    data.Add(new double[] { minGen + 6 * d, minGen + 7 * d, minGen + 8 * d, minGen + 9 * d });
+                    data.Add(new double[] { minGen + 8 * d, minGen + 9 * d, minGen + 10 * d, maxGen });
 
-                    data.Add(new int[] { minGen, minGen + d, minGen + 2 * d, minGen + 3 * d });
-                    data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
-                    data.Add(new int[] { minGen + 4 * d, minGen + 5 * d, minGen + 6 * d, minGen + 7 * d });
-                    data.Add(new int[] { minGen + 6 * d, minGen + 7 * d, minGen + 8 * d, minGen + 9 * d });
-                    data.Add(new int[] { minGen + 8 * d, minGen + 9 * d, minGen + 10 * d, maxGen });
+                    data.Add(new double[] { minGen, minGen + d, minGen + 2 * d, minGen + 3 * d });
+                    data.Add(new double[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
+                    data.Add(new double[] { minGen + 4 * d, minGen + 5 * d, minGen + 6 * d, minGen + 7 * d });
+                    data.Add(new double[] { minGen + 6 * d, minGen + 7 * d, minGen + 8 * d, minGen + 9 * d });
+                    data.Add(new double[] { minGen + 8 * d, minGen + 9 * d, minGen + 10 * d, maxGen });
 
-                    data.Add(new int[] { minGen, minGen + d, minGen + 2 * d, minGen + 3 * d });
-                    data.Add(new int[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
-                    data.Add(new int[] { minGen + 4 * d, minGen + 5 * d, minGen + 6 * d, minGen + 7 * d });
-                    data.Add(new int[] { minGen + 6 * d, minGen + 7 * d, minGen + 8 * d, minGen + 9 * d });
-                    data.Add(new int[] { minGen + 8 * d, minGen + 9 * d, minGen + 10 * d, maxGen });
+                    data.Add(new double[] { minGen, minGen + d, minGen + 2 * d, minGen + 3 * d });
+                    data.Add(new double[] { minGen + 2 * d, minGen + 3 * d, minGen + 4 * d, minGen + 5 * d });
+                    data.Add(new double[] { minGen + 4 * d, minGen + 5 * d, minGen + 6 * d, minGen + 7 * d });
+                    data.Add(new double[] { minGen + 6 * d, minGen + 7 * d, minGen + 8 * d, minGen + 9 * d });
+                    data.Add(new double[] { minGen + 8 * d, minGen + 9 * d, minGen + 10 * d, maxGen });
                 }
                 else if (fu == "gauss")
                 {
-                    data.Add(new int[] { minGen + d, d / 3 });
-                    data.Add(new int[] { minGen + 2 * d, d / 3 });
-                    data.Add(new int[] { minGen + 3 * d, d / 3 });
-                    data.Add(new int[] { minGen + 4 * d, d / 3 });
-                    data.Add(new int[] { minGen + 5 * d, d / 3 });
+                    data.Add(new double[] { minGen + d, d / 3 });
+                    data.Add(new double[] { minGen + 2 * d, d / 3 });
+                    data.Add(new double[] { minGen + 3 * d, d / 3 });
+                    data.Add(new double[] { minGen + 4 * d, d / 3 });
+                    data.Add(new double[] { minGen + 5 * d, d / 3 });
 
-                    data.Add(new int[] { minGen + d, d / 3 });
-                    data.Add(new int[] { minGen + 2 * d, d / 3 });
-                    data.Add(new int[] { minGen + 3 * d, d / 3 });
-                    data.Add(new int[] { minGen + 4 * d, d / 3 });
-                    data.Add(new int[] { minGen + 5 * d, d / 3 });
+                    data.Add(new double[] { minGen + d, d / 3 });
+                    data.Add(new double[] { minGen + 2 * d, d / 3 });
+                    data.Add(new double[] { minGen + 3 * d, d / 3 });
+                    data.Add(new double[] { minGen + 4 * d, d / 3 });
+                    data.Add(new double[] { minGen + 5 * d, d / 3 });
 
-                    data.Add(new int[] { minGen + d, d / 3 });
-                    data.Add(new int[] { minGen + 2 * d, d / 3 });
-                    data.Add(new int[] { minGen + 3 * d, d / 3 });
-                    data.Add(new int[] { minGen + 4 * d, d / 3 });
-                    data.Add(new int[] { minGen + 5 * d, d / 3 });
+                    data.Add(new double[] { minGen + d, d / 3 });
+                    data.Add(new double[] { minGen + 2 * d, d / 3 });
+                    data.Add(new double[] { minGen + 3 * d, d / 3 });
+                    data.Add(new double[] { minGen + 4 * d, d / 3 });
+                    data.Add(new double[] { minGen + 5 * d, d / 3 });
                 }
             }
 
@@ -304,9 +308,9 @@ namespace Mamdani_Fuzzy
             int ct = 0;
             for (int k=0; k< membershipIn.Count; k++)
             {
-                LearningX[k][0] = minGen;
                 for (int i = 0; i < membershipIn[k].Length / nDiv; i++)
                 {
+                    LearningX[k][i] = i* (maxGen / size);
                     for (int j = n; j < n + nDiv; j++)
                     {
                         if (fu=="tr")
@@ -335,16 +339,16 @@ namespace Mamdani_Fuzzy
             double[,] membershipR = new double[size+1,nR];
             
             ct = 0;
-            int lim = 0;
-            if (fu == "tr")
-                lim = rFuzzy.Set[classes[nR - 1]][2];
-            else if (fu == "trap")
-                lim = rFuzzy.Set[classes[nR - 1]][3];
-            else if (fu == "gauss")
-                lim = maxGen;// rFuzzy.Set[classes[nR - 1]][0];
-            for (int i=minGen; i<= lim; i++)
+            //int lim = 0;
+            //if (fu == "tr")
+            //    lim = rFuzzy.Set[classes[nR - 1]][2];
+            //else if (fu == "trap")
+            //    lim = rFuzzy.Set[classes[nR - 1]][3];
+            //else if (fu == "gauss")
+            //    lim = maxGen;// rFuzzy.Set[classes[nR - 1]][0];
+            for (int i=0; i< size; i++)
             {
-                rL[ct] = i;
+                rL[ct] = i*(maxGen/size);
                 for (int j = 0; j< nR; j++)
                 {
                     if (fu=="tr")
@@ -455,6 +459,10 @@ namespace Mamdani_Fuzzy
                     for (int j = 0; j < nIn; j++)
                     {
                         args[j] = categoryXL[i, j];
+                        if (args[j]==null)
+                        {
+
+                        }
                         weight *= m[i, j];
                     }
                     weight *= mY[i];
@@ -531,11 +539,11 @@ namespace Mamdani_Fuzzy
             int n = 0;
             for (int i=0; i< size; i++)
             {
-                if (Math.Abs(Convert.ToDouble(dataGridView1.Rows[i].Cells["Rntr"].Value)
-                    - Convert.ToDouble(dataGridView1.Rows[i].Cells["R"].Value)) <= 15)
-                {
-                    dataGridView1.Rows[i].Cells["Rt"].Value = dataGridView1.Rows[i].Cells["Rtr"].Value;
-                }   
+            //    if (Math.Abs(Convert.ToDouble(dataGridView1.Rows[i].Cells["Rntr"].Value)
+            //        - Convert.ToDouble(dataGridView1.Rows[i].Cells["R"].Value)) <= 15)
+            //    {
+            //        dataGridView1.Rows[i].Cells["Rt"].Value = dataGridView1.Rows[i].Cells["Rtr"].Value;
+            //    }   
                 dataGridView1.Rows[i].Cells["Rtr"].Style.BackColor = Color.Green;
                 if (dataGridView1.Rows[i].Cells["Rt"].Value != dataGridView1.Rows[i].Cells["Rtr"].Value)
                 {
@@ -550,7 +558,9 @@ namespace Mamdani_Fuzzy
             }
             NRlabel.Text = Math.Round(((double)n / (double)size * 100),1).ToString()+ "%";
             msre += Math.Sqrt(sum / n);
-            MSRELabel.Text = Math.Round(msre/cot, 4).ToString();
+            if (cot == 3)
+                msre /= cot;
+            MSRELabel.Text = Math.Round(msre, 4).ToString();
         }
 
         private void showRules(FuzzyRules rls)
@@ -702,6 +712,20 @@ namespace Mamdani_Fuzzy
         private void generateButton_Click(object sender, EventArgs e)
         {
             Random rn = new Random();
+            int ct=0;
+            using (StreamReader sr = new StreamReader(path))
+            {
+                // Read the stream to a string, and write the string to the console.
+                while (!sr.EndOfStream)
+                {
+                    String line = sr.ReadLine();
+                    string[] data = line.Split('|');
+                    genData[0][ct] = Double.Parse(data[0]);
+                    genData[1][ct] = Double.Parse(data[1]);
+                    ct++;
+                }
+            }
+
             rulesButton.Enabled = true;
             dataGridView1.Columns.Clear();
             dataGridView1.Rows.Clear();
@@ -727,18 +751,20 @@ namespace Mamdani_Fuzzy
                 mm.Add(new double[size, rFuzzy.Set.Count]);
             }
             msY.Add(new double[rFuzzy.Set.Count, 1]);
+            
 
             for (int i = 0; i < size; i++)
             {
-
+                
                 for (int z =0; z< nIn; z++)
                 {
-                    genData[z][i] = rn.Next(minGen, maxGen);
-                    TestX[z][i] = genData[z][i];// rn.Next(minGen, maxGen);
+                    //genData[z][i] = rn.Next(minGen, maxGen);
+                    TestX[z][i] = rn.NextDouble() * 5;//(minGen, maxGen);// rn.Next(minGen, maxGen);
                 }
-                LearningY[0][i] = rn.Next(minGen, maxGen);
-                TestY[0][i] = LearningY[0][i];// rn.Next(minGen, maxGen);
-
+                LearningY[0][i] = rn.NextDouble() * 5;
+                TestY[0][i] = rn.NextDouble() * 5;//LearningY[0][i];// rn.Next(minGen, maxGen);
+                
+                
                 dataGridView1.Rows.Add(new string[]{ TestX[0][i].ToString(), TestX[1][i].ToString() });
                 double max = Double.MinValue;
                 int mi = 0;
@@ -747,7 +773,13 @@ namespace Mamdani_Fuzzy
                     max = double.MinValue;
                     for (int k = 0; k < LearningX[j].Length; k++)
                     {
-                        if (genData[j][i] == LearningX[j][k])
+                        double d1 = Math.Round(genData[j][i], 2);
+                        double d2 = Math.Round(LearningX[j][k], 2);
+                        if (Math.Round(genData[j][i], 2) == Math.Round(LearningX[j][k], 2)
+                            || Math.Round(genData[j][i], 2) == Math.Round(LearningX[j][k], 2) + 0.01
+                            || Math.Round(genData[j][i], 2) == Math.Round(LearningX[j][k], 2) - 0.01
+                            || Math.Round(genData[j][i], 2) == Math.Round(LearningX[j][k], 2) + 0.02
+                            || Math.Round(genData[j][i], 2) == Math.Round(LearningX[j][k], 2) - 0.02)
                         {
                             for (int h = 0; h < nDiv; h++)
                             {
@@ -759,6 +791,10 @@ namespace Mamdani_Fuzzy
                                 }
                             }
                             categoryXL[i, j] = keys[mi];
+                            if (categoryXL[i,j] == null)
+                            {
+
+                            }
                             m[i,j] = max;
                             break;
                         }
@@ -767,7 +803,11 @@ namespace Mamdani_Fuzzy
                 max = double.MinValue;
                 for (int k = 0; k < rL.Length; k++)
                 {
-                    if (LearningY[0][i] == rL[k])
+                    if (Math.Round(LearningY[0][i], 2) == Math.Round(rL[k], 2)
+                            || Math.Round(LearningY[0][i], 2) == Math.Round(rL[k], 2) + 0.01
+                            || Math.Round(LearningY[0][i], 2) == Math.Round(rL[k], 2) - 0.01
+                            || Math.Round(LearningY[0][i], 2) == Math.Round(rL[k], 2) + 0.02
+                            || Math.Round(LearningY[0][i], 2) == Math.Round(rL[k], 2) - 0.02)
                     {
                         for (int h = 0; h < nDiv; h++)
                         {
@@ -794,6 +834,25 @@ namespace Mamdani_Fuzzy
                 }
 
             }
+        }
+
+
+        private void radioButton7_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            path = AppDomain.CurrentDomain.BaseDirectory+@"\1dim.txt";
+        }
+
+        private void radioButton6_CheckedChanged(object sender, EventArgs e)
+        {
+
+            path = AppDomain.CurrentDomain.BaseDirectory+@"\2dim.txt";
+        }
+
+        private void radioButton8_CheckedChanged(object sender, EventArgs e)
+        {
+
+            path = AppDomain.CurrentDomain.BaseDirectory + @"\4dim.txt";
         }
     }
 }

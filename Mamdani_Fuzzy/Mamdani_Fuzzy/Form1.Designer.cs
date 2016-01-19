@@ -47,6 +47,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.MSRELabel = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.radioButton8 = new System.Windows.Forms.RadioButton();
+            this.radioButton6 = new System.Windows.Forms.RadioButton();
+            this.radioButton7 = new System.Windows.Forms.RadioButton();
             this.NRlabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -54,6 +58,7 @@
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -269,6 +274,7 @@
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBox3.Controls.Add(this.groupBox4);
             this.groupBox3.Controls.Add(this.NRlabel);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.MSRELabel);
@@ -279,10 +285,57 @@
             this.groupBox3.Controls.Add(this.generateButton);
             this.groupBox3.Location = new System.Drawing.Point(1062, 27);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(245, 237);
+            this.groupBox3.Size = new System.Drawing.Size(291, 237);
             this.groupBox3.TabIndex = 17;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Setup";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.radioButton8);
+            this.groupBox4.Controls.Add(this.radioButton6);
+            this.groupBox4.Controls.Add(this.radioButton7);
+            this.groupBox4.Location = new System.Drawing.Point(217, 20);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(74, 101);
+            this.groupBox4.TabIndex = 15;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Gen";
+            // 
+            // radioButton8
+            // 
+            this.radioButton8.AutoSize = true;
+            this.radioButton8.Location = new System.Drawing.Point(16, 65);
+            this.radioButton8.Name = "radioButton8";
+            this.radioButton8.Size = new System.Drawing.Size(50, 17);
+            this.radioButton8.TabIndex = 13;
+            this.radioButton8.Text = "4 dim";
+            this.radioButton8.UseVisualStyleBackColor = true;
+            this.radioButton8.CheckedChanged += new System.EventHandler(this.radioButton8_CheckedChanged);
+            // 
+            // radioButton6
+            // 
+            this.radioButton6.AutoSize = true;
+            this.radioButton6.Location = new System.Drawing.Point(16, 42);
+            this.radioButton6.Name = "radioButton6";
+            this.radioButton6.Size = new System.Drawing.Size(50, 17);
+            this.radioButton6.TabIndex = 12;
+            this.radioButton6.Text = "2 dim";
+            this.radioButton6.UseVisualStyleBackColor = true;
+            this.radioButton6.CheckedChanged += new System.EventHandler(this.radioButton6_CheckedChanged);
+            // 
+            // radioButton7
+            // 
+            this.radioButton7.AutoSize = true;
+            this.radioButton7.Checked = true;
+            this.radioButton7.Location = new System.Drawing.Point(16, 19);
+            this.radioButton7.Name = "radioButton7";
+            this.radioButton7.Size = new System.Drawing.Size(50, 17);
+            this.radioButton7.TabIndex = 11;
+            this.radioButton7.TabStop = true;
+            this.radioButton7.Text = "1 dim";
+            this.radioButton7.UseVisualStyleBackColor = true;
+            this.radioButton7.CheckedChanged += new System.EventHandler(this.radioButton7_CheckedChanged);
             // 
             // NRlabel
             // 
@@ -325,6 +378,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -351,6 +406,10 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label NRlabel;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.RadioButton radioButton8;
+        private System.Windows.Forms.RadioButton radioButton6;
+        private System.Windows.Forms.RadioButton radioButton7;
     }
 }
 
